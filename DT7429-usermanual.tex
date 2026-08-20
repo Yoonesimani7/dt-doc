@@ -218,83 +218,143 @@
 
 % ============================================================================
 \begin{document}
-	
-	
+
+
 	\begin{titlepage}
 		\centering
-		
+
 		\includegraphics[width=3cm]{logo.png}
-		
+
 		\vspace{1.2cm}
-		
+
 		{\Huge\bfseries راهنمای فنی\par}
-		
+
 		\vspace{0.5cm}
-		
+
 		{\Huge\bfseries
 			\lr{DT7429 Layer 2 Managed Switch}
 			\par}
-		
+
 		\vspace{0.7cm}
-		
+
 		{\Large\lr{Technical Documentation}\par}
-		
+
 		\vspace{0.1cm}
-		
+
 		\includegraphics[width=0.58\textwidth]{switch.jpeg}
-		
+
 		\vfill
-		
+
 		\begin{latin}
 			{\Large Prepared for\par}
 			\vspace{0.3cm}
 			{\LARGE\bfseries VAF Co.\par}
 		\end{latin}
-		
+
 		\vspace{0.5cm}
-		
+
 		{\large Version 1.0\par}
 		\vspace{0.4cm}
 		{\large \today\par}
 	\end{titlepage}
-	
+
 	\pagenumbering{roman}
-	\tableofcontents
-	\clearpage
-	
+
 	\chapter*{پیشگفتار}
 	\addcontentsline{toc}{chapter}{پیشگفتار}
-	
-	متن پیشگفتار...
-	
+
+	این راهنما برای پیکربندی، مدیریت، پایش و عیب‌یابی
+	سوییچ مدیریتی \lr{DT7429 Layer 2} تهیه شده است. ساختار فصل‌ها
+	با الگوی رایج راهنماهای پیکربندی \lr{Cisco Catalyst 2960} تنظیم
+	شده و در آن، اصطلاحات فنی، نام قابلیت‌ها و دستورهای \lr{CLI}
+	به زبان اصلی حفظ شده‌اند.
+
+	\begin{notebox}{راهنمای استفاده}
+		برای هر قابلیت، ابتدا مفهوم و پیش‌فرض‌ها، سپس دستورهای
+		پیکربندی، مثال عملی و در پایان دستورهای بررسی ارائه می‌شود.
+		بخش‌هایی که هنوز محتوای اختصاصی \lr{DT7429} برای آن‌ها تهیه نشده
+		است، به‌صورت بخش خالی مشخص شده‌اند تا بعداً تکمیل شوند.
+	\end{notebox}
+
 	\clearpage
-	
+	\tableofcontents
+	\clearpage
+
 	\pagenumbering{arabic}
+
+	% ============================================================================
+	% فصل 1: نمای کلی و روش استفاده از CLI
+	% ============================================================================
+	\chapter{نمای کلی و روش استفاده از CLI}
+
+	\section{معرفی سوییچ DT7429}
+	این بخش برای تکمیل مشخصات کلی، قابلیت‌های اصلی و محدودیت‌های
+	سخت‌افزاری سوییچ DT7429 در نظر گرفته شده است.
+
+	\section{قابلیت‌های Layer 2}
+	این بخش باید قابلیت‌های اصلی Layer 2، از جمله VLAN، STP،
+	Link Aggregation و قابلیت‌های پایش را معرفی کند.
+
+	\section{پیکربندی پیش‌فرض}
+	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+
+	\section{روند کلی پیکربندی}
+	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+
+	\section{حالت‌های مختلف CLI}
+	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+
+	\section{نحو دستورها و روش بررسی تنظیمات}
+	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+
+	% ============================================================================
+	% فصل 2: مدیریت IP و سرویس‌های پایه
+	% ============================================================================
+	\chapter{مدیریت IP و سرویس‌های پایه}
+
+	\section{مدیریت سوییچ از طریق Interface VLAN}
+	محتوای اختصاصی این بخش در فصل «تنظیمات IP و Gateway» موجود است.
+
+	\section{تنظیم IP Address و Default Gateway}
+	محتوای اختصاصی این بخش در فصل «تنظیمات IP و Gateway» موجود است.
+
+	\section{DHCP Client}
+	محتوای اختصاصی این بخش در فصل «DHCP Server و DHCP Client» موجود است.
+
+	\section{NTP}
+	محتوای اختصاصی این بخش در فصل «تنظیم و فعال‌سازی NTP» موجود است.
+
+	\section{مدیریت از طریق SNMP و Syslog}
+	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+
+	% ============================================================================
+	% فصل 3: VLAN و پورت‌های Access و Trunk
+	% ============================================================================
 	\chapter{\lr{VLAN Configuration}}
 	\label{chap:vlan}
-	
+
 	این فصل نحوه پیکربندی
 	\lr{Virtual Local Area Networks (VLANs)}
 	را بر روی سوییچ مدیریتی \lr{DT7429 Layer 2+} تشریح می‌کند.
 	مباحث این فصل شامل \lr{port modes}، \lr{standard VLANs}،
 	\lr{native VLANs} در \lr{trunk links}، \lr{voice VLANs} و
 	\lr{private VLANs} است.
-	
+
 	استفاده از \lr{VLANs} امکان تقسیم‌بندی منطقی یک
 	\lr{physical switch} به چندین \lr{broadcast domain} مستقل را فراهم
 	می‌کند. این تقسیم‌بندی موجب بهبود \lr{network security}،
 	ایزوله‌سازی ترافیک (\lr{traffic isolation}) و سهولت در مدیریت
 	(\lr{manageability}) شبکه می‌شود.
-	
+
 	سوییچ \lr{DT7429} از حداکثر
 	\lr{4094 IEEE 802.1Q VLANs} پشتیبانی می‌کند. همچنین قابلیت‌های
 	\lr{protocol-based VLANs}، \lr{MAC-based VLANs}، \lr{voice VLANs}
 	و \lr{QinQ (802.1Q tunneling)} در این دستگاه پشتیبانی می‌شوند.
-	
+
 	% ============================================================================
 	\section{\lr{Configuring Switch Port Modes (Access and Trunk)}}
 	\label{sec:port-modes}
-	
+
 	پیش از آن‌که یک \lr{VLAN} بتواند ترافیک را از طریق یک پورت منتقل کند،
 	باید حالت عملکرد پورت به یکی از دو حالت \lr{access} یا \lr{trunk}
 	تنظیم شود. پورت‌های \lr{Access} تنها ترافیک یک \lr{VLAN} را حمل
@@ -302,12 +362,12 @@
 	\lr{IP phone} استفاده می‌شوند. پورت‌های \lr{Trunk} ترافیک برچسب‌گذاری‌شده
 	(\lr{tagged traffic}) مربوط به چندین \lr{VLAN} را حمل می‌کنند و
 	عموماً برای اتصال بین سوییچ‌ها یا اتصال سوییچ به روتر کاربرد دارند.
-	
+
 	حالت پورت در \lr{interface configuration mode} و با استفاده از
 	خانواده دستورهای \lr{\texttt{switchport}} پیکربندی می‌شود. افزودن
 	\lr{\texttt{no}} در ابتدای هر یک از این دستورها، تنظیم مربوطه را به
 	مقدار پیش‌فرض بازمی‌گرداند.
-	
+
 	\begin{cautionbox}{\lr{Caution}}
 		برخلاف برخی پلتفرم‌های سوییچ، دستگاه \lr{DT7429} در زمان فعال‌سازی
 		حالت \lr{trunk}، حالت پیش‌فرض \lr{``allow all''} را پیاده‌سازی
@@ -315,48 +375,48 @@
 		\lr{trunk} اضافه شوند؛ در غیر این صورت، هیچ ترافیک برچسب‌گذاری‌شده‌ای
 		از طریق آن \lr{trunk} ارسال نخواهد شد.
 	\end{cautionbox}
-	
+
 	\begin{cmdtable}{Access and Trunk Port Configuration Commands}
 		\texttt{DT7429(config)\# interface gigabitethernet 1} &
 		Enter interface configuration mode \\
-		
+
 		\texttt{DT7429(config-if)\# switchport mode access} &
 		Set the port to access mode \\
-		
+
 		\texttt{DT7429(config-if)\# no switchport mode access} &
 		Remove access mode from the port \\
-		
+
 		\texttt{DT7429(config-if)\# switchport access vlan \textit{vlan-id}} &
 		Assign an access port to a VLAN \\
-		
+
 		\texttt{DT7429(config-if)\# switchport mode trunk} &
 		Set the port to trunk mode \\
-		
+
 		\texttt{DT7429(config-if)\# no switchport mode trunk} &
 		Remove trunk mode from the port \\
-		
+
 		\texttt{DT7429(config-if)\# switchport trunk allowed vlan \textit{vlan-list}} &
 		Specify VLANs allowed on the trunk\newline
 		\textit{(required before tagged traffic is forwarded)} \\
 	\end{cmdtable}
-	
+
 	\begin{notebox}{\lr{Verify Configuration}}
 		برای اطمینان از اعمال شدن تغییرات مربوط به حالت پورت و
 		\lr{VLAN}ها، دستور \lr{privileged EXEC} زیر را اجرا کنید:
-		
+
 		\begin{LTR}
 			\begin{lstlisting}
 				DT7429# show interface (interface-id) switchport
 			\end{lstlisting}
 		\end{LTR}
 	\end{notebox}
-	
-	\subsection*{\lr{Configuration Example}}
-	
+
+	\subsection{\lr{Configuration Example}}
+
 	مثال زیر، اینترفیس \lr{\texttt{GigabitEthernet2}} را به‌عنوان یک
 	پورت \lr{trunk} پیکربندی کرده و عبور \lr{VLAN}های ۱، ۲، ۵ و ۶ را
 	مجاز می‌کند:
-	
+
 	\begin{LTR}
 		\begin{lstlisting}
 			DT7429(config)# interface gigabitethernet2
@@ -364,53 +424,53 @@
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
 		\end{lstlisting}
 	\end{LTR}
-	
+
 	% ============================================================================
 	\section{\lr{Configuring VLANs}}
 	\label{sec:vlan-basic}
-	
+
 	ایجاد \lr{VLAN}ها در \lr{global configuration mode} انجام می‌شود.
 	هر \lr{VLAN} با یک شناسه عددی \lr{VLAN ID} مشخص شده و می‌تواند
 	به‌صورت اختیاری دارای یک نام توصیفی باشد. قرار دادن
 	\lr{\texttt{no}} قبل از دستور \lr{\texttt{vlan}}، \lr{VLAN} مشخص‌شده
 	را حذف می‌کند.
-	
+
 	\begin{cmdtable}{Basic VLAN Configuration Commands}
 		\texttt{DT7429(config)\# vlan \textit{vlan-id}} &
 		Create a VLAN and enter VLAN configuration mode \\
-		
+
 		\texttt{DT7429(config)\# no vlan \textit{vlan-id}} &
 		Delete a VLAN \\
-		
+
 		\texttt{DT7429(config-vlan)\# name \textit{Engineering}} &
 		Assign a name to the VLAN (1--32 characters) \\
-		
+
 		\texttt{DT7429(config-vlan)\# exit} &
 		Apply changes and return to global configuration mode \\
 	\end{cmdtable}
-	
+
 	\begin{cmdtable}{Displaying VLAN Information}
 		\texttt{DT7429\# show vlan} &
 		Display all configured VLANs \\
 	\end{cmdtable}
-	
+
 	\begin{notebox}{\lr{Default Behavior}}
 		\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
 			\item به‌صورت پیش‌فرض، همه پورت‌های سوییچ عضو \lr{\textbf{VLAN 1}} هستند.
 			\item \lr{\textbf{VLAN 1}}، \lr{VLAN} پیش‌فرض است و قابل حذف نیست.
 		\end{itemize}
 	\end{notebox}
-	
+
 	% ============================================================================
 	\section{\lr{Configuring the Native VLAN}}
 	\label{sec:native-vlan}
-	
+
 	در یک لینک \lr{IEEE 802.1Q trunk}، ترافیک بدون برچسب
 	(\lr{untagged traffic}) از طریق \lr{native VLAN} منتقل می‌شود.
 	به‌صورت پیش‌فرض، \lr{VLAN 1} به‌عنوان \lr{native VLAN} در کل سوییچ
 	استفاده می‌شود. در این بخش نحوه تغییر \lr{native VLAN} روی یک
 	اینترفیس \lr{trunk} توضیح داده می‌شود.
-	
+
 	\begin{notebox}{\lr{Default Behavior}}
 		\begin{itemize}[leftmargin=1.4em, itemsep=2pt]
 			\item به‌صورت پیش‌فرض، تمام اینترفیس‌های سوییچ عضو \lr{\textbf{VLAN 1}} هستند.
@@ -419,25 +479,25 @@
 			\lr{\texttt{interface GigabitEthernet}} مربوطه فعال می‌شوند.
 		\end{itemize}
 	\end{notebox}
-	
-	\subsection*{\lr{Native VLAN Configuration Procedure}}
-	
+
+	\subsection{\lr{Native VLAN Configuration Procedure}}
+
 	\begin{enumerate}[leftmargin=1.6em]
-		
+
 		\item \textbf{ایجاد \lr{native VLAN} جدید.}
 		برای مثال، جهت ایجاد \lr{VLAN 10}:
-		
+
 		\begin{LTR}
 			\begin{lstlisting}
 				DT7429# configure terminal
 				DT7429(config)# vlan 10
 			\end{lstlisting}
 		\end{LTR}
-		
+
 		\item \textbf{ورود به اینترفیس \lr{trunk} موردنظر.}
 		تنظیم \lr{native VLAN} فقط روی اینترفیس‌های \lr{trunk} اعمال می‌شود.
 		بنابراین ابتدا باید پورت در حالت \lr{trunk} پیکربندی شود:
-		
+
 		\begin{LTR}
 			\begin{lstlisting}
 				DT7429# configure terminal
@@ -445,24 +505,24 @@
 				DT7429(config-if)# switchport mode trunk
 			\end{lstlisting}
 		\end{LTR}
-		
+
 		\item \textbf{تغییر \lr{native VLAN}.}
 		دستور زیر \lr{native VLAN} را از مقدار پیش‌فرض \lr{VLAN 1} به
 		\lr{VLAN 10} تغییر می‌دهد:
-		
+
 		\begin{LTR}
 			\begin{lstlisting}
 				DT7429(config-if)# switchport trunk native vlan 10
 				DT7429(config-if)# exit
 			\end{lstlisting}
 		\end{LTR}
-		
+
 	\end{enumerate}
-	
+
 	% ============================================================================
 	\section{\lr{Configuring Voice VLAN}}
 	\label{sec:voice-vlan}
-	
+
 	قابلیت \lr{Voice VLAN} امکان جداسازی خودکار ترافیک تلفن‌های
 	\lr{IP} از ترافیک داده را روی یک پورت \lr{access} مشترک فراهم
 	می‌کند. این قابلیت، اعمال سیاست‌های \lr{QoS} را ساده‌تر کرده و
@@ -470,82 +530,82 @@
 	\lr{interface configuration mode} و با دستور
 	\lr{\texttt{switchport voice vlan}} فعال می‌شود. افزودن
 	\lr{\texttt{no}} در ابتدای دستور، آن را غیرفعال می‌کند.
-	
+
 	\begin{cmdtable}{Voice VLAN Configuration Commands}
 		\texttt{DT7429(config)\# interface \textit{interface-id}} &
 		Enter the target interface \\
-		
+
 		\texttt{DT7429(config-if)\# switchport voice vlan \textit{vlan-id}} &
 		Assign the VLAN used to carry voice traffic \\
-		
+
 		\texttt{DT7429(config-if)\# no switchport voice vlan \textit{vlan-id}} &
 		Remove the voice VLAN assignment \\
-		
+
 		\texttt{DT7429(config-if)\# switchport voice vlan untagged} &
 		Configure IP phones to send untagged frames\newline
 		\textit{(default mode for all phones)} \\
 	\end{cmdtable}
-	
+
 	\begin{cautionbox}{\lr{Requirement}}
 		قابلیت \lr{Voice VLAN} باید روی یک پورت \lr{Layer 2} که در حالت
 		\lr{\textbf{access}} فعالیت می‌کند پیکربندی شود.
 	\end{cautionbox}
-	
-	\subsection*{\lr{Configuration Example}}
-	
+
+	\subsection{\lr{Configuration Example}}
+
 	مثال زیر \lr{VLAN 2} را به‌عنوان \lr{voice VLAN} روی اینترفیس
 	\lr{\texttt{GigabitEthernet2}} اختصاص می‌دهد:
-	
+
 	\begin{LTR}
 		\begin{lstlisting}
 			DT7429(config)# interface gigabitethernet2
 			DT7429(config-if)# switchport voice vlan 2
 		\end{lstlisting}
 	\end{LTR}
-	
+
 	% ============================================================================
 	\section{\lr{Configuring Private VLANs}}
 	\label{sec:private-vlan}
-	
+
 	قابلیت \lr{Private VLANs (PVLANs)} امکان ایزوله‌سازی در لایه ۲ را
 	بین پورت‌هایی که در یک \lr{primary VLAN} مشترک قرار دارند، فراهم
 	می‌کند. یک \lr{private VLAN} شامل یک \lr{primary VLAN} و یک یا چند
 	\lr{secondary VLAN} است. هر \lr{secondary VLAN} می‌تواند در یکی از
 	حالت‌های زیر فعالیت کند:
-	
+
 	\begin{itemize}[leftmargin=1.4em]
 		\item \textbf{\lr{Isolated}} ---
 		میزبان‌ها فقط می‌توانند با پورت‌های \lr{promiscuous} ارتباط برقرار کنند.
 		میزبان‌های \lr{isolated} نمی‌توانند با یکدیگر ارتباط داشته باشند.
-		
+
 		\item \textbf{\lr{Community}} ---
 		میزبان‌ها می‌توانند با سایر اعضای همان \lr{community} و همچنین پورت‌های
 		\lr{promiscuous} ارتباط برقرار کنند.
-		
+
 		\item \textbf{\lr{Promiscuous}} ---
 		معمولاً پورت \lr{uplink} یا پورت متصل به روتر است و می‌تواند با تمام
 		میزبان‌های \lr{isolated} و \lr{community} ارتباط برقرار کند.
 	\end{itemize}
-	
+
 	\begin{cmdtable}{Private VLAN Port Configuration Commands}
 		\texttt{DT7429(config-if)\# switchport mode private-vlan \{host \textbar\ promiscuous\}} &
 		Set the private VLAN port mode \\
-		
+
 		\texttt{DT7429(config-if)\# switchport private-vlan host-association \textit{vid}} &
 		Associate a host port with a secondary VLAN \\
-		
+
 		\texttt{DT7429(config-if)\# switchport private-vlan mapping \{add \textbar\ remove\} \textit{secondary-vlan-list}} &
 		Map or unmap secondary VLANs to the primary VLAN\newline
 		\textit{(configured on the promiscuous/uplink port)} \\
 	\end{cmdtable}
-	
-	\subsection*{\lr{Configuration Example}}
-	
+
+	\subsection{\lr{Configuration Example}}
+
 	مثال زیر یک \lr{isolated secondary VLAN} با شناسه \lr{200} و پورت‌های
 	عضو \lr{\texttt{GigabitEthernet1--2}} ایجاد می‌کند. همچنین یک
 	\lr{community secondary VLAN} با شناسه \lr{300} و پورت‌های عضو
 	\lr{\texttt{GigabitEthernet3--4}} پیکربندی می‌شود:
-	
+
 	\begin{LTR}
 		\begin{lstlisting}
 			DT7429# configure terminal
@@ -564,96 +624,96 @@
 			DT7429(config-if-range)# end
 		\end{lstlisting}
 	\end{LTR}
-	
-	\subsection*{\lr{Verification}}
-	
+
+	\subsection{\lr{Verification}}
+
 	برای بررسی پیکربندی \lr{Private VLAN}، دستور زیر را اجرا کنید:
-	
+
 	\begin{LTR}
 		\begin{lstlisting}
 			DT7429# show vlan private-vlan
-			
+
 			VLAN   PVLAN_NO   community_ports
 			----   --------   ---------------
 			300    1          3,4
-			
+
 			VID    isolated_ports
 			----   --------------
 			200    1,2
 		\end{lstlisting}
 	\end{LTR}
-	
+
 	\chapter{پیکربندی Spanning Tree Protocol (STP)}
-	
+
 	پروتکل \lr{Spanning Tree Protocol (STP)} برای جلوگیری از ایجاد
 	\lr{Layer 2 Loop} در شبکه استفاده می‌شود. در شبکه‌هایی که بین
 	سوییچ‌ها مسیرهای افزونه وجود دارد، ممکن است فریم‌های \lr{Broadcast}
 	یا \lr{Unknown Unicast} به‌صورت نامحدود در شبکه گردش کنند.
-	
+
 	STP با بررسی توپولوژی شبکه، مسیرهای اضافی را به‌صورت منطقی
 	غیرفعال می‌کند و تنها یک مسیر مناسب را در حالت \lr{Forwarding}
 	نگه می‌دارد. در صورت قطع مسیر اصلی، یکی از مسیرهای جایگزین
 	می‌تواند دوباره فعال شود.
-	
+
 	\begin{tipbox}{نکته مدیریتی}
 		پیش از فعال‌سازی STP، توپولوژی فیزیکی شبکه، مسیرهای افزونه و
 		نقش هر سوییچ در شبکه را بررسی کنید. تغییر نادرست در
 		\lr{STP Mode} یا \lr{Bridge Priority} ممکن است باعث تغییر
 		مسیر عبور ترافیک شود.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	\section{فعال‌سازی و تنظیمات Global مربوط به STP}
 	% ============================================================================
-	
+
 	فعال‌سازی STP در سطح Global باعث می‌شود پروتکل روی سوییچ فعال شود
 	و سوییچ بتواند در فرایند انتخاب \lr{Root Bridge} و محاسبه مسیرهای
 	مناسب شرکت کند.
-	
+
 	در حالت عادی، STP باید روی تمام سوییچ‌هایی که در یک توپولوژی
 	افزونه قرار دارند فعال باشد. غیرفعال‌کردن STP فقط در شرایط خاص
 	و پس از اطمینان از نبود مسیر حلقه‌ای مجاز است.
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# spanning-tree enable
 			DT7429(config)# no spanning-tree enable
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Global Spanning Tree Configuration Commands}
 		\texttt{DT7429(config)\# spanning-tree enable} &
 		Enable Spanning Tree Protocol globally \\
-		
+
 		\texttt{DT7429(config)\# no spanning-tree enable} &
 		Disable Spanning Tree Protocol globally \\
-		
+
 		\texttt{DT7429(config)\# spanning-tree mode
 			\textit{\{stp | rstp | mstp\}}} &
 		Select the global Spanning Tree operating mode \\
-		
+
 		\texttt{DT7429\# show spanning-tree} &
 		Display global Spanning Tree status and interface details \\
 	\end{cmdtable}
-	
+
 	\begin{cautionbox}{هشدار}
 		غیرفعال‌کردن STP روی سوییچی که دارای لینک‌های افزونه است،
 		می‌تواند باعث ایجاد \lr{Layer 2 Loop} و اختلال گسترده در شبکه شود.
 		قبل از استفاده از دستور \lr{no spanning-tree enable}، از نبود
 		مسیر حلقه‌ای اطمینان حاصل کنید.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	\section{انتخاب STP Mode}
 	% ============================================================================
-	
+
 	سوییچ DT7429 می‌تواند در یکی از حالت‌های استاندارد
 	\lr{STP}، \lr{RSTP} یا \lr{MSTP} فعالیت کند. انتخاب حالت مناسب
 	به اندازه و پیچیدگی شبکه، تعداد \lr{VLAN}ها و نیازمندی‌های
 	همگرایی شبکه بستگی دارد.
-	
+
 	\begin{table}[htbp]
 		\centering
 		\caption{Spanning Tree Operating Modes}
@@ -678,9 +738,9 @@
 			\hline
 		\end{tabular}
 	\end{table}
-	
+
 	برای تغییر حالت کاری STP، از دستورات زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# spanning-tree mode stp
@@ -688,50 +748,50 @@
 			DT7429(config)# spanning-tree mode mstp
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{پیشنهاد پیکربندی}
 		در شبکه‌هایی که به همگرایی سریع نیاز دارند، استفاده از
 		\lr{RSTP} یا \lr{MSTP} نسبت به \lr{STP} معمولی پیشنهاد می‌شود.
 		در صورت استفاده از \lr{MSTP}، تنظیمات \lr{MST Region} باید روی
 		تمام سوییچ‌های عضو یک Region یکسان باشد.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	\section{پیکربندی Interface و Edge Port}
 	% ============================================================================
-	
+
 	پورت‌هایی که به تجهیزات نهایی مانند کامپیوتر، تلفن تحت شبکه،
 	دوربین یا سرور متصل هستند، معمولاً نباید مانند لینک بین دو
 	سوییچ در فرایند STP رفتار کنند. این پورت‌ها به‌عنوان
 	\lr{Edge Port} شناخته می‌شوند.
-	
+
 	قرار‌دادن یک پورت در حالت \lr{Edge} باعث می‌شود پورت سریع‌تر
 	وارد حالت \lr{Forwarding} شود. این قابلیت برای کاهش زمان انتظار
 	تجهیزات نهایی هنگام برقراری اتصال استفاده می‌شود.
-	
+
 	\begin{cmdtable}{Interface Spanning Tree Configuration Commands}
 		\texttt{DT7429(config)\# interface
 			\textit{GigabitEthernet/interface-id}} &
 		Enter interface configuration mode \\
-		
+
 		\texttt{DT7429(config-if)\# spanning-tree ?} &
 		Display available Spanning Tree interface commands \\
-		
+
 		\texttt{DT7429(config-if)\# spanning-tree edge} &
 		Enable administrative edge mode on the interface \\
-		
+
 		\texttt{DT7429(config-if)\# spanning-tree auto-edge} &
 		Enable automatic edge-port detection \\
-		
+
 		\texttt{DT7429(config-if)\# spanning-tree port-priority
 			\textit{priority}} &
 		Change the Spanning Tree port priority \\
-		
+
 		\texttt{DT7429(config-if)\# do show spanning-tree} &
 		Display Spanning Tree information without leaving interface mode \\
 	\end{cmdtable}
-	
+
 	\begin{table}[htbp]
 		\centering
 		\caption{Edge Port Operating Modes}
@@ -758,47 +818,47 @@
 			\hline
 		\end{tabular}
 	\end{table}
-	
+
 	نمونهٔ زیر، یک پورت را به‌عنوان \lr{Edge Port} تنظیم می‌کند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree edge
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در صورتی که نوع تجهیز متصل به پورت مشخص نباشد، می‌توان از
 	\lr{Auto-edge} استفاده کرد. این حالت با بررسی دریافت یا عدم دریافت
 	\lr{BPDU}، دربارهٔ Edge یا Non-edge بودن پورت تصمیم‌گیری می‌کند.
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree auto-edge
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		حالت \lr{Edge} را روی لینک‌های بین سوییچ‌ها، لینک‌های
 		\lr{Trunk} یا پورت‌هایی که احتمال اتصال سوییچ به آن‌ها وجود دارد
 		فعال نکنید؛ زیرا این کار می‌تواند پورت را بدون تأخیر وارد حالت
 		\lr{Forwarding} کند و احتمال ایجاد Loop را افزایش دهد.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	\section{BPDU Guard و BPDU Filter}
 	% ============================================================================
-	
+
 	پیام‌های \lr{Bridge Protocol Data Unit (BPDU)} برای تبادل اطلاعات
 	بین سوییچ‌ها و محاسبه توپولوژی STP استفاده می‌شوند. روی پورت‌هایی
 	که به تجهیزات نهایی متصل هستند، دریافت BPDU می‌تواند نشانهٔ اتصال
 	یک سوییچ یا تجهیز غیرمجاز باشد.
-	
+
 	قابلیت‌های \lr{BPDU Guard} و \lr{BPDU Filter} برای محافظت از
 	پورت‌های Edge استفاده می‌شوند، اما عملکرد آن‌ها یکسان نیست.
-	
+
 	\begin{table}[htbp]
 		\centering
 		\caption{BPDU Protection Features}
@@ -819,9 +879,9 @@
 			\hline
 		\end{tabular}
 	\end{table}
-	
+
 	برای تنظیم این قابلیت‌ها، ابتدا وارد پیکربندی پورت شوید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
@@ -830,41 +890,41 @@
 			DT7429(config-if)# spanning-tree bpdu-filter enable
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{تفاوت BPDU Guard و BPDU Filter}
 		در صورت دریافت BPDU، قابلیت \lr{BPDU Guard} برای حفاظت از شبکه
 		پورت را غیرفعال می‌کند؛ اما \lr{BPDU Filter} پیام‌های BPDU را
 		فیلتر می‌کند و ممکن است از مشارکت پورت در فرایند تشخیص توپولوژی
 		جلوگیری کند. استفاده از \lr{BPDU Filter} باید با دقت انجام شود.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	\section{Loop Guard}
 	% ============================================================================
-	
+
 	قابلیت \lr{Loop Guard} برای شناسایی شرایطی مانند
 	\lr{Unidirectional Link} استفاده می‌شود. در این شرایط ممکن است
 	پورت، پیام‌های BPDU را دریافت نکند و به‌اشتباه وارد حالت
 	\lr{Forwarding} شود.
-	
+
 	\lr{Loop Guard} با قرار‌دادن پورت مشکوک در حالت
 	\lr{Loop-inconsistent} از ایجاد Loop جلوگیری می‌کند. این قابلیت
 	به‌ویژه برای لینک‌های بین سوییچ‌ها و مسیرهای افزونه اهمیت دارد.
-	
+
 	\begin{cmdtable}{Loop Guard Configuration Commands}
 		\texttt{DT7429(config-if)\# spanning-tree auto-edge} &
 		Enable automatic edge-port detection before applying Loop Guard \\
-		
+
 		\texttt{DT7429(config-if)\# spanning-tree guard loop} &
 		Enable Loop Guard on the selected interface \\
-		
+
 		\texttt{DT7429(config-if)\# do show spanning-tree} &
 		Display the current interface Spanning Tree state \\
 	\end{cmdtable}
-	
+
 	نمونهٔ پیکربندی \lr{Loop Guard} به‌صورت زیر است:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
@@ -872,40 +932,40 @@
 			DT7429(config-if)# spanning-tree guard loop
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{نکته عملیاتی}
 		پس از فعال‌سازی \lr{Loop Guard}، وضعیت پورت را با دستور
 		\lr{show spanning-tree} بررسی کنید. در صورت تشخیص مشکل در لینک،
 		ممکن است پورت در حالت \lr{Loop-inconsistent} قرار گیرد تا از
 		عبور ترافیک و ایجاد Loop جلوگیری شود.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	\section{UDLD و تشخیص لینک یک‌طرفه}
 	% ============================================================================
-	
+
 	قابلیت \lr{Unidirectional Link Detection (UDLD)} برای تشخیص
 	لینک‌هایی استفاده می‌شود که ارتباط آن‌ها فقط در یک جهت برقرار است.
 	این وضعیت می‌تواند در اثر خرابی فیبر، مشکل در Transceiver یا
 	اختلال در یکی از مسیرهای ارسال و دریافت ایجاد شود.
-	
+
 	استفاده از \lr{UDLD} در کنار \lr{STP} و \lr{Loop Guard} می‌تواند
 	پایداری شبکه را در لینک‌های افزونه افزایش دهد.
-	
+
 	\begin{cmdtable}{UDLD Configuration Commands}
 		\texttt{DT7429(config-if)\# udld port} &
 		Enable UDLD on the interface \\
-		
+
 		\texttt{DT7429(config-if)\# exit} &
 		Exit interface configuration mode \\
-		
+
 		\texttt{DT7429(config)\# do show interface status} &
 		Display interface status and possible error-disabled state \\
 	\end{cmdtable}
-	
+
 	نمونهٔ فعال‌سازی \lr{UDLD} روی یک پورت:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
@@ -914,54 +974,54 @@
 			DT7429(config)# do show interface status
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	% ============================================================================
 	\section{پیکربندی MSTP}
 	% ============================================================================
-	
+
 	پروتکل \lr{Multiple Spanning Tree Protocol (MSTP)} امکان نگاشت چند
 	\lr{VLAN} به یک \lr{MST Instance} را فراهم می‌کند. در نتیجه،
 	به‌جای ایجاد یک نمونهٔ مستقل از STP برای هر VLAN، چند VLAN می‌توانند
 	از یک Instance مشترک استفاده کنند.
-	
+
 	این روش تعداد محاسبات STP را کاهش داده و امکان استفادهٔ بهتر از
 	لینک‌های افزونه را فراهم می‌کند. تمام سوییچ‌هایی که در یک
 	\lr{MST Region} قرار دارند باید دارای تنظیمات یکسانی برای
 	\lr{Region Name}، \lr{Revision Number} و نگاشت VLANها باشند.
-	
+
 	\begin{cmdtable}{MSTP Configuration Commands}
 		\texttt{DT7429(config)\# spanning-tree mode mstp} &
 		Enable MSTP mode globally \\
-		
+
 		\texttt{DT7429(config)\# spanning-tree mst configuration} &
 		Enter MST region configuration mode \\
-		
+
 		\texttt{DT7429(config-mst)\# name \textit{region-name}} &
 		Assign a name to the MST region \\
-		
+
 		\texttt{DT7429(config-mst)\# revision
 			\textit{revision-number}} &
 		Assign the MST region revision number \\
-		
+
 		\texttt{DT7429(config-mst)\# instance
 			\textit{instance-id} vlan \textit{vlan-list}} &
 		Map VLANs to an MST instance \\
-		
+
 		\texttt{DT7429(config-mst)\# priority instance
 			\textit{instance-id} set \textit{priority}} &
 		Set the priority for a specific MST instance \\
-		
+
 		\texttt{DT7429(config-mst)\# exit} &
 		Exit MST configuration mode \\
-		
+
 		\texttt{DT7429(config)\# do show spanning-tree} &
 		Display MSTP status and instance information \\
 	\end{cmdtable}
-	
+
 	نمونهٔ زیر دو گروه از \lr{VLAN}ها را به دو
 	\lr{MST Instance} مختلف نگاشت می‌کند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# spanning-tree enable
@@ -977,44 +1037,44 @@
 			DT7429(config-mst)# exit
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{نکته هماهنگی MST Region}
 		برای عملکرد صحیح MSTP، مقادیر \lr{Region Name}،
 		\lr{Revision Number} و \lr{VLAN-to-Instance Mapping} باید در
 		تمام سوییچ‌های یک Region یکسان باشند. در غیر این صورت، سوییچ‌ها
 		ممکن است در Regionهای متفاوت قرار بگیرند.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	\section{بررسی و تأیید تنظیمات}
 	% ============================================================================
-	
+
 	پس از اعمال تنظیمات، وضعیت STP باید بررسی شود. این بررسی شامل
 	اطمینان از فعال‌بودن STP، شناسایی صحیح \lr{Root Bridge}، وضعیت
 	پورت‌ها، نقش پورت‌ها و وضعیت \lr{MST Instance}ها است.
-	
+
 	\begin{cmdtable}{Spanning Tree Verification Commands}
 		\texttt{DT7429\# show spanning-tree} &
 		Display global STP or MSTP status \\
-		
+
 		\texttt{DT7429(config-if)\# do show spanning-tree} &
 		Display Spanning Tree information from interface mode \\
-		
+
 		\texttt{DT7429(config)\# do show interface status} &
 		Display interface operational and error-disabled states \\
 	\end{cmdtable}
-	
+
 	نمونهٔ دستور بررسی وضعیت کلی STP:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show spanning-tree
 		\end{lstlisting}
 	\end{latin}
-	
+
 	هنگام بررسی خروجی، موارد زیر را کنترل کنید:
-	
+
 	\begin{itemize}
 		\item فعال‌بودن صحیح \lr{STP} یا \lr{MSTP}؛
 		\item مشخص‌بودن \lr{Root Bridge}؛
@@ -1024,103 +1084,103 @@
 		\lr{Error-disabled}؛
 		\item یکسان‌بودن تنظیمات \lr{MST Region} در سوییچ‌های مرتبط.
 	\end{itemize}
-	
+
 	\begin{cautionbox}{هشدار نهایی}
 		پس از هر تغییر در تنظیمات STP، وضعیت لینک‌های بین سوییچ‌ها و
 		مسیر عبور ترافیک را بررسی کنید. تغییر در \lr{STP Mode}،
 		\lr{Port Priority} یا \lr{MST Instance Mapping} می‌تواند باعث
 		انتخاب مجدد مسیرها و تغییر توپولوژی منطقی شبکه شود.
 	\end{cautionbox}
-	
+
 	% ============================================================================
 	% فصل: SPAN و RSPAN
 	% ============================================================================
-	
+
 	\chapter{فعال‌سازی و پیکربندی SPAN و RSPAN}
-	
+
 	\section{مقدمه}
-	
+
 	یکی از بهترین روش‌ها برای دریافت و تحلیل ترافیک واقعی شبکه،
 	استفاده از قابلیت \lr{Port Mirroring} در سوییچ‌های شبکه است.
 	با استفاده از این قابلیت، ترافیک عبوری از یک یا چند پورت مبدأ،
 	به یک پورت مقصد کپی می‌شود.
-	
+
 	پورت مقصد معمولاً به یک رایانه، سرور یا تجهیز تحلیل ترافیک متصل
 	می‌شود. سپس می‌توان با استفاده از نرم‌افزارهایی مانند
 	\lr{Wireshark}، ترافیک شبکه را بررسی و تحلیل کرد.
-	
+
 	قابلیت \lr{Port Mirroring} در تجهیزات شبکه معمولاً با نام
 	\lr{SPAN (Switched Port Analyzer)} شناخته می‌شود. در صورتی که
 	ترافیک مانیتور‌شده از طریق یک VLAN اختصاصی بین چند سوییچ منتقل
 	شود، از قابلیت \lr{RSPAN (Remote SPAN)} استفاده می‌شود.
-	
+
 	\begin{tipbox}{نکته عملیاتی}
 		برای تحلیل دقیق ترافیک، پورت مقصد باید به تجهیزی متصل شود که
 		توانایی دریافت حجم ترافیک موردنظر را داشته باشد. در صورت بیشتر
 		بودن حجم ترافیک مبدأ از ظرفیت پورت مقصد، احتمال حذف بخشی از
 		بسته‌ها وجود دارد.
 	\end{tipbox}
-	
-	
+
+
 	\section{محدودیت پشتیبانی}
-	
+
 	در نسخه فعلی نرم‌افزار سوییچ DT7429، تنها یک
 	\lr{Monitor Session} پشتیبانی می‌شود. بنابراین در هر لحظه فقط
 	یک پیکربندی SPAN یا RSPAN می‌تواند روی سوییچ فعال باشد.
-	
+
 	\begin{cautionbox}{هشدار}
 		پیش از ایجاد یک Session جدید، وضعیت Session فعلی را بررسی کنید.
 		در صورت فعال‌بودن Session قبلی، تنظیمات جدید ممکن است باعث تغییر
 		یا جایگزینی پیکربندی موجود شود.
 	\end{cautionbox}
-	
-	
+
+
 	\section{نمایش وضعیت SPAN و RSPAN}
-	
+
 	برای مشاهده وضعیت Session مانیتورینگ، از دستور زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show monitor session
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{SPAN and RSPAN Verification Command}
 		\texttt{DT7429\# show monitor session} &
 		Display the current monitor session status, source ports,
 		destination port, and RSPAN VLAN
 	\end{cmdtable}
-	
-	
+
+
 	\section{دستورات پیکربندی SPAN و RSPAN}
-	
+
 	\begin{cmdtable}{SPAN and RSPAN Configuration Commands}
 		\texttt{DT7429(config)\# monitor session source
 			interface ethernet \textit{\textless port-list\textgreater}} &
 		Add one or more source interfaces to the monitor session \\
-		
+
 		\texttt{DT7429(config)\# monitor session destination
 			interface ethernet \textit{\textless port\textgreater}} &
 		Configure the local destination interface for SPAN \\
-		
+
 		\texttt{DT7429(config)\# monitor session source
 			remote vlan \textit{\textless vid\textgreater}} &
 		Configure the source RSPAN VLAN \\
-		
+
 		\texttt{DT7429(config)\# monitor session destination
 			remote vlan \textit{\textless vid\textgreater}} &
 		Configure the destination RSPAN VLAN
 	\end{cmdtable}
-	
-	
+
+
 	\section{پیکربندی SPAN محلی}
-	
+
 	در SPAN محلی، پورت‌های مبدأ و مقصد روی یک سوییچ قرار دارند.
 	ترافیک دریافت‌شده یا ارسال‌شده از پورت مبدأ به پورت مقصد کپی می‌شود.
-	
+
 	در مثال زیر، پورت شماره 2 به‌عنوان پورت مبدأ و پورت شماره 8
 	به‌عنوان پورت مقصد تنظیم شده است:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# monitor session source interface ethernet 2
@@ -1128,9 +1188,9 @@
 			DT7429# show monitor session
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			Session
@@ -1140,28 +1200,28 @@
 			Destination port    :    8
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در این خروجی، فعال‌بودن Session، پورت مبدأ و پورت مقصد نمایش داده
 	می‌شود.
-	
-	
+
+
 	\section{پیکربندی RSPAN}
-	
+
 	در RSPAN، ترافیک مانیتور‌شده از طریق یک VLAN اختصاصی به سوییچ
 	دیگر منتقل می‌شود. این VLAN باید در مسیر بین سوییچ مبدأ و سوییچ
 	مقصد قابل عبور باشد.
-	
+
 	برای این منظور، یک VLAN اختصاصی به‌عنوان
 	\lr{RSPAN VLAN} ایجاد یا انتخاب شده و روی لینک بین سوییچ‌ها
 	به‌صورت مجاز عبور داده می‌شود.
-	
+
 	در نمونه زیر، پورت شماره 2 به‌عنوان پورت مبدأ انتخاب شده و
 	VLAN شماره 901 برای انتقال ترافیک مانیتور‌شده استفاده می‌شود:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# monitor session source interface ethernet 2
-			
+
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# switchport mode trunk
 			DT7429(config-if)# switchport
@@ -1169,9 +1229,9 @@
 			DT7429(config-if)# do show vlan
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی بررسی VLAN:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			VID   Name              Access_ports       Trunk_ports
@@ -1180,10 +1240,10 @@
 			901   vlan00901         1                  1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	پس از اطمینان از عبور VLAN شماره 901 روی لینک Trunk، پورت یا
 	سوییچ مقصد را به RSPAN VLAN مربوط می‌کنیم:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# exit
@@ -1191,17 +1251,17 @@
 			DT7429(config)# do show vlan
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در پایان، وضعیت Session را بررسی کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show monitor session
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			Session
@@ -1212,55 +1272,55 @@
 			RSPAN VLAN           :    901
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{ملاحظات RSPAN}
 		برای عملکرد صحیح RSPAN، VLAN اختصاصی مانیتورینگ باید در تمام
 		لینک‌های بین سوییچ مبدأ و مقصد مجاز باشد. بهتر است این VLAN
 		برای کاربران عادی استفاده نشود و تنها به انتقال ترافیک
 		مانیتور‌شده اختصاص یابد.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: IGMP Snooping
 	% ============================================================================
-	
+
 	\chapter{پیکربندی و بررسی سرویس IGMP Snooping}
-	
+
 	\section{مقدمه}
-	
+
 	پروتکل \lr{IGMP (Internet Group Management Protocol)} برای مدیریت
 	عضویت تجهیزات شبکه در گروه‌های \lr{Multicast} استفاده می‌شود.
 	تجهیزات دریافت‌کننده با استفاده از پیام‌های IGMP مشخص می‌کنند که
 	به کدام گروه Multicast علاقه‌مند هستند.
-	
+
 	قابلیت \lr{IGMP Snooping} با بررسی پیام‌های IGMP در لایه 2، ارسال
 	ترافیک Multicast را فقط به پورت‌هایی محدود می‌کند که عضو گروه
 	مربوطه هستند. این کار از انتشار غیرضروری ترافیک Multicast در
 	تمام پورت‌های VLAN جلوگیری می‌کند.
-	
+
 	سوییچ DT7429 به‌صورت پیش‌فرض از نسخه‌های 2 و 3 پروتکل IGMP
 	پشتیبانی می‌کند.
-	
-	
+
+
 	\section{نمایش گروه‌های IGMP}
-	
+
 	برای مشاهده گروه‌های Multicast ثبت‌شده روی سوییچ، از دستور زیر
 	استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show ip igmp snooping groups
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{IGMP Snooping Group Verification}
 		\texttt{DT7429\# show ip igmp snooping groups} &
 		Display VLANs, Multicast groups, IGMP versions, and member ports
 	\end{cmdtable}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			VLAN      GROUPS                IGMP      PORTS
@@ -1268,30 +1328,30 @@
 			1         235.255.1.1          3         1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در این خروجی، گروه Multicast با آدرس `235.255.1.1` روی VLAN شماره
 	1 مشاهده شده و نسخه IGMP استفاده‌شده، نسخه 3 است. همچنین پورت
 	شماره 1 به‌عنوان پورت عضو گروه نمایش داده شده است.
-	
-	
+
+
 	\section{مشاهده IGMP Querier}
-	
+
 	برای مشاهده اطلاعات مربوط به \lr{IGMP Querier} از دستور زیر
 	استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show ip igmp snooping querier
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{IGMP Querier Verification}
 		\texttt{DT7429\# show ip igmp snooping querier} &
 		Display the VLAN, IP address, IGMP version, and Querier port
 	\end{cmdtable}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			VLAN      IP                 IGMP      PORT
@@ -1299,98 +1359,98 @@
 			1         192.168.1.10       3         1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در این نمونه، آدرس IP مربوط به IGMP Querier برابر با
 	`192.168.1.10` است و این Querier روی VLAN شماره 1 فعالیت می‌کند.
-	
-	
+
+
 	\begin{tipbox}{نکته عیب‌یابی}
 		در صورت مشاهده‌نشدن گروه Multicast، ابتدا اتصال فیزیکی، عضویت
 		گیرنده در گروه، وضعیت VLAN و وجود IGMP Querier را بررسی کنید.
 		همچنین باید اطمینان حاصل شود که پورت مربوط به گیرنده در خروجی
 		دستور \lr{show ip igmp snooping groups} نمایش داده می‌شود.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: sFlow
 	% ============================================================================
-	
+
 	\chapter{فعال‌سازی و پیکربندی sFlow}
-	
-	
+
+
 	\section{مقدمه}
-	
+
 	پروتکل \lr{sFlow} برای نمونه‌برداری و ارسال اطلاعات مربوط به
 	ترافیک شبکه به یک Collector استفاده می‌شود. این اطلاعات می‌تواند
 	برای پایش مصرف پهنای‌باند، شناسایی الگوهای ترافیکی، بررسی رفتار
 	کاربران و عیب‌یابی شبکه مورد استفاده قرار گیرد.
-	
+
 	در سوییچ DT7429، قابلیت \lr{sFlow} برای پایش ترافیک شبکه
 	پیاده‌سازی شده است. برخلاف \lr{NetFlow} که بیشتر در تجهیزات
 	Cisco شناخته می‌شود، sFlow یک روش استاندارد برای نمونه‌برداری
 	ترافیک است.
-	
+
 	بر اساس تنظیمات فعلی، نمونه‌برداری به‌صورت پیش‌فرض هر 20 ثانیه
 	انجام می‌شود.
-	
-	
+
+
 	\section{دستورهای پیکربندی و بررسی sFlow}
-	
+
 	\begin{cmdtable}{sFlow Configuration Commands}
 		\texttt{DT7429(config)\# sflow collector
 			\textit{\textless ip\textgreater \textless port\textgreater}} &
 		Configure the IP address and UDP port of the sFlow Collector \\
-		
+
 		\texttt{DT7429\# show sflow} &
 		Display the current sFlow configuration and operational status
 	\end{cmdtable}
-	
-	
+
+
 	\section{تنظیم sFlow Collector}
-	
+
 	برای ارسال داده‌های نمونه‌برداری‌شده، باید آدرس IP و شماره پورت
 	Collector مشخص شود. در مثال زیر، آدرس Collector برابر با
 	`192.168.57.9` و شماره پورت آن `6343` است:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# configure terminal
 			DT7429(config)# sflow collector 192.168.57.9 6343
 		\end{lstlisting}
 	\end{latin}
-	
+
 	پس از اجرای دستور، نمونه پیام سیستم به‌صورت زیر نمایش داده می‌شود:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			sys: /mnt/sflsp -d vtss.vlan.1 -C 192.168.57.9 -c 6343 -s 20 &
 			sflow agent started
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمایش پیام \lr{sflow agent started} نشان می‌دهد که Agent مربوط
 	به sFlow آغاز به کار کرده است.
-	
-	
+
+
 	\section{بررسی وضعیت sFlow}
-	
+
 	برای مشاهده وضعیت و تنظیمات sFlow، دستور زیر را اجرا کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show sflow
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{sFlow Verification Command}
 		\texttt{DT7429\# show sflow} &
 		Display sFlow Agent, Collector, sampling, and operational
 		configuration
 	\end{cmdtable}
-	
+
 	در هنگام بررسی خروجی، موارد زیر را کنترل کنید:
-	
+
 	\begin{itemize}
 		\item فعال‌بودن \lr{sFlow Agent}؛
 		\item صحیح‌بودن آدرس IP مربوط به Collector؛
@@ -1399,19 +1459,19 @@
 		\item دسترسی شبکه‌ای سوییچ به Collector؛
 		\item دریافت داده‌ها در نرم‌افزار یا سامانه مانیتورینگ مقصد.
 	\end{itemize}
-	
-	
+
+
 	\begin{cautionbox}{هشدار امنیتی}
 		داده‌های sFlow ممکن است شامل اطلاعاتی درباره الگوی ارتباطی،
 		مقصدها، مبدأها و حجم ترافیک شبکه باشند. بنابراین Collector را
 		در یک شبکه مدیریتی امن قرار دهید و دسترسی به آن را محدود کنید.
 	\end{cautionbox}
-	
-	
+
+
 	\section{عیب‌یابی sFlow}
-	
+
 	در صورت دریافت‌نشدن داده در Collector، مراحل زیر را بررسی کنید:
-	
+
 	\begin{enumerate}
 		\item آدرس IP Collector را بررسی کنید؛
 		\item شماره پورت تنظیم‌شده روی سوییچ و Collector را مقایسه کنید؛
@@ -1423,32 +1483,32 @@
 		\item زمان نمونه‌برداری را با نیازمندی سامانه مانیتورینگ
 		مقایسه کنید.
 	\end{enumerate}
-	
-	
+
+
 	\begin{tipbox}{نکته مدیریتی}
 		sFlow بر پایه نمونه‌برداری کار می‌کند و لزوماً تمام بسته‌های
 		عبوری را به Collector ارسال نمی‌کند. برای تحلیل کامل و بسته‌به‌بسته،
 		از SPAN یا RSPAN در کنار یک ابزار تحلیل ترافیک مانند Wireshark
 		استفاده کنید.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: مدیریت جدول MAC
 	% ============================================================================
-	
+
 	\chapter{مدیریت جدول آدرس‌های MAC}
-	
+
 	\section{مقدمه}
-	
+
 	سوییچ برای ارسال فریم‌ها در شبکه، آدرس‌های MAC را در جدولی به
 	نام \lr{MAC Address Table} ذخیره می‌کند. این جدول شامل اطلاعاتی
 	مانند آدرس MAC، شماره VLAN، نوع یادگیری آدرس و پورتی است که
 	آدرس از طریق آن شناسایی شده است.
-	
+
 	آدرس‌های MAC می‌توانند به‌صورت \lr{Dynamic} توسط سوییچ یادگیری
 	شوند یا به‌صورت \lr{Static} توسط مدیر شبکه در جدول ثبت شوند.
-	
+
 	\begin{table}[htbp]
 		\centering
 		\caption{انواع آدرس‌های MAC در جدول سوییچ}
@@ -1469,370 +1529,370 @@
 			\hline
 		\end{tabular}
 	\end{table}
-	
-	
+
+
 	\section{نمایش جدول MAC}
-	
+
 	برای مشاهده جدول فعلی آدرس‌های MAC، از دستور زیر در
 	لایه ممتاز استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show mac address-table
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{MAC Address Table Verification}
 		\texttt{DT7429\# show mac address-table} &
 		Display the current MAC address table
 	\end{cmdtable}
-	
-	
+
+
 	\section{پاک‌کردن آدرس‌های MAC}
-	
+
 	در لایه ممتاز، می‌توان کل جدول MAC یا تنها بخشی از آدرس‌های
 	Dynamic را پاک کرد.
-	
+
 	\begin{cmdtable}{MAC Address Table Clearing Commands}
 		\texttt{DT7429\# clear mac address-table} &
 		Clear the MAC address table \\
-		
+
 		\texttt{DT7429\# clear mac address-table dynamic} &
 		Clear all dynamically learned MAC addresses \\
-		
+
 		\texttt{DT7429\# clear mac address-table dynamic
 			mac-addr \textit{\textless mac-address\textgreater}} &
 		Clear a specific dynamic MAC address \\
-		
+
 		\texttt{DT7429\# clear mac address-table dynamic
 			interface \textit{\textless interface-id\textgreater}} &
 		Clear dynamic MAC addresses learned on a specific interface \\
-		
+
 		\texttt{DT7429\# clear mac address-table dynamic
 			vlan \textit{\textless vlan-id\textgreater}} &
 		Clear dynamic MAC addresses learned in a specific VLAN \\
-		
+
 		\texttt{DT7429\# clear mac address-table notification} &
 		Clear MAC address table notification information
 	\end{cmdtable}
-	
+
 	برای نمونه، دستور زیر آدرس Dynamic مشخص‌شده را از جدول حذف
 	می‌کند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# clear mac address-table dynamic address 0008.0070.0007
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		پاک‌کردن جدول MAC ممکن است باعث شود سوییچ برای مدتی دوباره
 		آدرس‌های MAC را یادگیری کند. در این مدت، برخی فریم‌ها ممکن است
 		به‌صورت Flooding ارسال شوند.
 	\end{cautionbox}
-	
-	
+
+
 	\section{تنظیم زمان Aging جدول MAC}
-	
+
 	آدرس‌های Dynamic پس از مدت مشخصی که فریمی از آن‌ها دریافت نشود،
 	از جدول MAC حذف می‌شوند. این مدت با عنوان
 	\lr{MAC Address Aging Time} شناخته می‌شود.
-	
+
 	مقدار پیش‌فرض Aging Time در DT7429 برابر با 300 ثانیه است.
-	
+
 	\begin{cmdtable}{MAC Aging Time Configuration Commands}
 		\texttt{DT7429(config)\# mac address-table aging-time
 			\textit{\textless seconds\textgreater}} &
 		Set the dynamic MAC address aging time in seconds \\
-		
+
 		\texttt{DT7429(config)\# mac address-table aging-time 0} &
 		Disable aging so that dynamic MAC addresses are not aged out \\
-		
+
 		\texttt{DT7429(config)\# no mac address-table aging-time} &
 		Remove the configured aging-time setting and restore the default
 		behavior \\
-		
+
 		\texttt{DT7429\# show mac address-table aging-time} &
 		Display the current MAC address aging-time configuration
 	\end{cmdtable}
-	
+
 	محدوده زمانی قابل تنظیم، مطابق مستندات موجود، از 10 تا
 	1000000 ثانیه است. مقدار صفر باعث می‌شود زمان مشخصی برای حذف
 	آدرس‌های Dynamic در نظر گرفته نشود.
-	
+
 	برای تنظیم زمان Aging روی 200 ثانیه:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# mac address-table aging-time 200
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای مشاهده تنظیمات:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show mac address-table aging-time
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{نکته مدیریتی}
 		در شبکه‌هایی با تغییرات زیاد در محل اتصال تجهیزات، مقدار Aging
 		بیش از حد زیاد می‌تواند باعث باقی‌ماندن اطلاعات قدیمی در جدول
 		شود. در مقابل، مقدار بسیار کم می‌تواند باعث افزایش یادگیری مجدد
 		و Flooding شود.
 	\end{tipbox}
-	
-	
+
+
 	\section{افزودن آدرس MAC به‌صورت Static}
-	
+
 	با استفاده از دستور \lr{mac address-table static} می‌توان یک
 	آدرس MAC را به‌صورت دستی در جدول ثبت کرد. آدرس Static تا زمانی
 	که به‌صورت دستی حذف نشود، در جدول باقی می‌ماند.
-	
+
 	\begin{cmdtable}{Static MAC Address Configuration Commands}
 		\texttt{DT7429(config)\# mac address-table static
 			\textit{\textless mac-address\textgreater}} &
 		Add a static MAC address \\
-		
+
 		\texttt{DT7429(config)\# mac address-table static
 			\textit{\textless mac-address\textgreater} vlan
 			\textit{\textless vlan-id\textgreater}} &
 		Add a static MAC address for a specific VLAN \\
-		
+
 		\texttt{DT7429(config)\# mac address-table static
 			\textit{\textless mac-address\textgreater} interface
 			\textit{\textless interface-id\textgreater}} &
 		Associate a static MAC address with a specific interface \\
-		
+
 		\texttt{DT7429(config)\# no mac address-table static
 			\textit{\textless mac-address\textgreater}} &
 		Remove a configured static MAC address \\
-		
+
 		\texttt{DT7429\# show mac address-table static} &
 		Display configured static MAC addresses
 	\end{cmdtable}
-	
+
 	در حالت پیش‌فرض، هیچ آدرس MAC استاتیکی روی سوییچ تعریف نشده
 	است. نمونه زیر، آدرس مشخص‌شده را روی VLAN شماره 4 و پورت
 	GigabitEthernet 1 ثبت می‌کند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# mac address-table static c2f3.220a.12f4 vlan 4 interface GigabitEthernet 1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای مشاهده آدرس‌های Static:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show mac address-table static
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		در صورت جابه‌جایی تجهیز یا تغییر پورت اتصال، آدرس Static ممکن
 		است باعث ارسال فریم‌ها به پورت قبلی شود. پس از هر تغییر فیزیکی،
 		تنظیمات Static MAC را بررسی کنید.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: تنظیمات سرعت و Duplex
 	% ============================================================================
-	
+
 	\chapter{تنظیمات سرعت و Duplex پورت‌ها}
-	
+
 	\section{مقدمه}
-	
+
 	پارامترهای \lr{Speed} و \lr{Duplex} نحوه برقراری ارتباط میان
 	سوییچ و تجهیز متصل به پورت را مشخص می‌کنند.
-	
+
 	در حالت \lr{Full-Duplex}، ارسال و دریافت داده می‌تواند به‌صورت
 	هم‌زمان انجام شود. در حالت \lr{Half-Duplex}، ارسال و دریافت
 	هم‌زمان انجام نمی‌شود.
-	
+
 	در حالت پیش‌فرض، پورت‌های FE و GE روی حالت خودکار قرار دارند و
 	تنظیمات Speed و Duplex از طریق \lr{Auto-Negotiation} تعیین می‌شود.
-	
-	
+
+
 	\section{تنظیم حالت Duplex}
-	
+
 	برای تنظیم Duplex، ابتدا وارد پیکربندی پورت شوید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Duplex Configuration Commands}
 		\texttt{DT7429(config-if)\# duplex full} &
 		Set the interface to Full-Duplex mode \\
-		
+
 		\texttt{DT7429(config-if)\# duplex half} &
 		Set the interface to Half-Duplex mode \\
-		
+
 		\texttt{DT7429(config-if)\# duplex auto} &
 		Enable automatic Duplex negotiation \\
-		
+
 		\texttt{DT7429(config-if)\# no duplex full} &
 		Remove the Full-Duplex configuration \\
-		
+
 		\texttt{DT7429(config-if)\# no duplex half} &
 		Remove the Half-Duplex configuration \\
-		
+
 		\texttt{DT7429(config-if)\# no duplex auto} &
 		Remove the automatic Duplex configuration
 	\end{cmdtable}
-	
+
 	برای تنظیم پورت GE1 در حالت Full-Duplex:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# duplex full
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای بازگرداندن پورت به حالت خودکار:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# duplex auto
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{تنظیم سرعت پورت}
-	
+
 	سرعت پورت را می‌توان روی 10، 100 یا 1000 مگابیت بر ثانیه
 	تنظیم کرد. همچنین امکان استفاده از حالت خودکار وجود دارد.
-	
+
 	\begin{cmdtable}{Interface Speed Configuration Commands}
 		\texttt{DT7429(config-if)\# speed 10} &
 		Set the interface speed to 10 Mbps \\
-		
+
 		\texttt{DT7429(config-if)\# speed 100} &
 		Set the interface speed to 100 Mbps \\
-		
+
 		\texttt{DT7429(config-if)\# speed 1000} &
 		Set the interface speed to 1000 Mbps \\
-		
+
 		\texttt{DT7429(config-if)\# speed auto} &
 		Enable automatic speed negotiation \\
-		
+
 		\texttt{DT7429(config-if)\# no speed 10} &
 		Remove the 10 Mbps speed configuration \\
-		
+
 		\texttt{DT7429(config-if)\# no speed 100} &
 		Remove the 100 Mbps speed configuration \\
-		
+
 		\texttt{DT7429(config-if)\# no speed 1000} &
 		Remove the 1000 Mbps speed configuration
 	\end{cmdtable}
-	
+
 	نمونه تنظیم پورت GE1 روی سرعت 100 Mbps:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# speed 100
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{پیشنهاد تنظیماتی}
 		چنانچه هر دو طرف لینک از Auto-Negotiation پشتیبانی می‌کنند،
 		پیشنهاد می‌شود هر دو طرف روی حالت \lr{auto} تنظیم شوند. در صورت
 		استفاده از SFP یا تجهیزی که از Auto-Negotiation پشتیبانی نمی‌کند،
 		ممکن است لازم باشد سرعت پورت به‌صورت دستی تنظیم شود.
 	\end{tipbox}
-	
+
 	\begin{cautionbox}{هشدار}
 		تغییر سرعت یا Duplex ممکن است باعث قطع موقت لینک و راه‌اندازی
 		مجدد پورت شود. این تغییرات را در زمان مناسب و با اطلاع قبلی
 		انجام دهید.
-	\end{cautionbox}	
-		
+	\end{cautionbox}
+
 		\section{بررسی وضعیت پورت}
-		
+
 		برای مشاهده وضعیت کلی پورت‌ها می‌توان از دستور زیر استفاده کرد:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429# show interface status
 			\end{lstlisting}
 		\end{latin}
-		
+
 		این دستور معمولاً اطلاعاتی مانند وضعیت Link، سرعت، Duplex و حالت
 		عملیاتی پورت را نمایش می‌دهد.
-		
-		
+
+
 		% ============================================================================
 		% فصل: Interface Range
 		% ============================================================================
-		
+
 		\chapter{پیکربندی هم‌زمان چند پورت با Interface Range}
-		
+
 		\section{مقدمه}
-		
+
 		با استفاده از دستور \lr{interface range} می‌توان تنظیمات یکسانی
 		را به‌صورت هم‌زمان روی چند پورت اعمال کرد. این قابلیت برای
 		پیکربندی گروهی پورت‌ها، به‌ویژه پورت‌های Access، کاربرد دارد.
-		
+
 		\section{انتخاب بازه‌ای از پورت‌ها}
-		
+
 		برای انتخاب پورت‌های 1 تا 9:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429(config)# interface range GigabitEthernet 1-9
 			\end{lstlisting}
 		\end{latin}
-		
+
 		پس از اجرای دستور، خط فرمان وارد حالت
 		\lr{config-if-range} می‌شود.
-		
+
 		در این حالت، نمونه تنظیم پورت‌های 1 تا 9 به‌صورت Access و
 		اختصاص VLAN شماره 10 به آن‌ها به شکل زیر است:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429(config-if-range)# switchport mode access
 				DT7429(config-if-range)# switchport access vlan 10
 			\end{lstlisting}
 		\end{latin}
-		
+
 		برای حذف این تنظیمات:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429(config-if-range)# no switchport mode access
 				DT7429(config-if-range)# no switchport access vlan 10
 			\end{lstlisting}
 		\end{latin}
-		
+
 		\section{انتخاب چند پورت غیرپیوسته}
-		
+
 		برای انتخاب پورت‌های GE1 و GE3، شماره پورت‌ها را با علامت ویرگول
 		از یکدیگر جدا کنید:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429(config)# interface range GigabitEthernet 1,3
 			\end{lstlisting}
 		\end{latin}
-		
+
 		برای انتخاب بازه GE1 تا GE2:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429(config)# interface range GigabitEthernet 1-2
 			\end{lstlisting}
 		\end{latin}
-		
+
 		\begin{cautionbox}{نکات استفاده از Interface Range}
 			\begin{itemize}
 				\item پورت اول و پورت انتهایی بازه باید وجود داشته باشند.
@@ -1844,55 +1904,55 @@
 				الگوی CLI دستگاه و با فاصله مناسب وارد شود.
 			\end{itemize}
 		\end{cautionbox}
-		
-		
+
+
 		% ============================================================================
 		% فصل: SFP Monitoring
 		% ============================================================================
-		
+
 		\chapter{پایش ماژول‌های SFP و Transceiver}
-		
+
 		\section{مقدمه}
-		
+
 		ماژول‌های \lr{SFP} برای برقراری ارتباط فیبر نوری یا برخی
 		ارتباط‌های مسی استفاده می‌شوند. بعضی از این ماژول‌ها از قابلیت
 		\lr{DOM (Digital Optical Monitoring)} پشتیبانی می‌کنند.
-		
+
 		با استفاده از اطلاعات Transceiver می‌توان مشخصاتی مانند نوع SFP،
 		سازنده، شماره سریال، سرعت، وضعیت Link و وضعیت دریافت سیگنال را
 		بررسی کرد.
-		
+
 		اطلاعات DOM معمولاً زمانی قابل مشاهده است که پورت در وضعیت
 		\lr{Up} قرار داشته باشد.
-		
-		
+
+
 		\section{نمایش اطلاعات SFP}
-		
+
 		برای مشاهده اطلاعات SFP متصل به یک یا چند پورت، از دستور زیر
 		استفاده کنید:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429# show interface GigabitEthernet <port-list> transceiver
 			\end{lstlisting}
 		\end{latin}
-		
+
 		\begin{cmdtable}{SFP Monitoring Commands}
 			\texttt{DT7429\# show interface GigabitEthernet
 				\textit{\textless port-list\textgreater} transceiver} &
 			Display SFP and transceiver information for the selected ports
 		\end{cmdtable}
-		
+
 		نمونه دستور:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429# show interface GigabitEthernet 26 transceiver
 			\end{lstlisting}
 		\end{latin}
-		
+
 		نمونه خروجی:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				Port  SFP-type     Vendor          Rev   SN            Los  API-IF  Speed  Link
@@ -1900,9 +1960,9 @@
 				26    1000BASE_SX  CISCO-FINISAR   11.0  AGM11291F9S   no   SERDES  1G     yes
 			\end{lstlisting}
 		\end{latin}
-		
+
 		در بررسی خروجی، موارد زیر اهمیت دارند:
-		
+
 		\begin{itemize}
 			\item نوع ماژول SFP؛
 			\item نام سازنده؛
@@ -1912,28 +1972,28 @@
 			\item وضعیت Link؛
 			\item نوع رابط داخلی Transceiver.
 		\end{itemize}
-		
+
 		\begin{tipbox}{نکته عیب‌یابی}
 			در صورت نمایش‌ندادن اطلاعات SFP، ابتدا وضعیت Link، نصب صحیح
 			ماژول، سازگاری SFP با سوییچ و تمیزی کانکتورهای فیبر نوری را
 			بررسی کنید.
 		\end{tipbox}
-		
-		
+
+
 		% ============================================================================
 		% فصل: Cable Diagnostics / TDR
 		% ============================================================================
-		
+
 		\chapter{تشخیص خطای کابل با استفاده از TDR}
-		
+
 		\section{مقدمه}
-		
+
 		قابلیت \lr{TDR (Time Domain Reflectometry)} برای عیب‌یابی کابل
 		شبکه استفاده می‌شود. این قابلیت با ارسال سیگنال در کابل و تحلیل
 		بازتاب آن، وضعیت زوج‌های کابل و محل تقریبی خطا را مشخص می‌کند.
-		
+
 		با استفاده از TDR می‌توان موارد زیر را بررسی کرد:
-		
+
 		\begin{itemize}
 			\item طول تقریبی کابل برحسب متر؛
 			\item سالم‌بودن زوج‌های کابل؛
@@ -1942,42 +2002,42 @@
 			\item وضعیت غیرعادی یا \lr{Abnormal}؛
 			\item فاصله تقریبی محل خرابی از پورت سوییچ.
 		\end{itemize}
-		
-		
+
+
 		\section{اجرای Cable Diagnostic}
-		
+
 		برای آغاز آزمایش کابل متصل به یک پورت، از دستور زیر استفاده کنید:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429# diagnostic start cable <port-no>
 			\end{lstlisting}
 		\end{latin}
-		
+
 		نمونه اجرای آزمایش روی پورت شماره 2:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				DT7429# diagnostic start cable 2
 				diagnostic start...
 			\end{lstlisting}
 		\end{latin}
-		
+
 		نمونه خروجی بررسی وضعیت زوج‌ها:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				Link: Up
-				
+
 				Cable diagnostic pair result on port 2:
 				Pair-A   Pair-B   Pair-C   Pair-D
 				-------  -------  -------  -------
 				ok       ok       abnorm   short
 			\end{lstlisting}
 		\end{latin}
-		
+
 		نمونه خروجی طول تقریبی کابل:
-		
+
 		\begin{latin}
 			\begin{lstlisting}[language=bash]
 				Cable length (meters) on port 2:
@@ -1986,30 +2046,30 @@
 				3        3        3        3
 			\end{lstlisting}
 		\end{latin}
-		
+
 		در این نمونه، زوج‌های A و B سالم هستند، زوج C وضعیت غیرعادی
 		دارد و زوج D با خطای اتصال کوتاه شناسایی شده است.
-		
+
 		\begin{cautionbox}{هشدار اجرای TDR}
 			آزمایش TDR ممکن است باعث اختلال موقت در ارتباط پورت شود.
 			این آزمایش را روی پورت‌های حساس یا لینک‌های عملیاتی، بدون
 			هماهنگی قبلی انجام ندهید.
 		\end{cautionbox}
-		
-		
+
+
 		% ============================================================================
 		% فصل: Access و Trunk
 		% ============================================================================
-		
-	\chapter{تنظیم حالت Access و Trunk پورت‌ها}
-	
+
+	\chapter{ویژگی‌های Interface و تشخیص خطا}
+
 	\section{مقدمه}
 			پورت‌های سوییچ معمولاً در یکی از دو حالت
 		\lr{Access} یا \lr{Trunk} پیکربندی می‌شوند.
 			پورت Access معمولاً برای اتصال تجهیزات نهایی استفاده می‌شود و
 		ترافیک یک VLAN را حمل می‌کند. پورت Trunk برای اتصال سوییچ‌ها،		روترها، سرورها یا تجهیزات مجازی‌سازی به کار می‌رود و می‌تواند
 		ترافیک چند VLAN را منتقل کند.
-	
+
 	\begin{table}[htbp]
 		\centering
 		\caption{مقایسه پورت Access و Trunk}
@@ -2030,12 +2090,12 @@
 			\hline
 		\end{tabular}
 	\end{table}
-	
-	
+
+
 	\section{تنظیم پورت در حالت Access}
 			برای تنظیم یک پورت در حالت Access، ابتدا وارد پیکربندی پورت
 		شوید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
@@ -2043,32 +2103,32 @@
 		\end{lstlisting}
 	\end{latin}
 			برای اختصاص VLAN مشخص به پورت:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# switchport access vlan <vlan-id>
 		\end{lstlisting}
 	\end{latin}
 			نمونه اختصاص VLAN شماره 10:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# switchport access vlan 10
 		\end{lstlisting}
 	\end{latin}
 			برای حذف تنظیمات Access:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# no switchport mode access
 			DT7429(config-if)# no switchport access vlan 10
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{تنظیم پورت در حالت Trunk}
 			برای تنظیم یک پورت در حالت Trunk:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 1
@@ -2077,32 +2137,32 @@
 	\end{latin}
 			در سوییچ DT7429، پس از فعال‌کردن حالت Trunk، وضعیت
 		\lr{Allow All} به‌صورت خودکار فعال نیست. بنابراین VLANهای موردنظر		باید به‌صورت صریح به فهرست VLANهای مجاز اضافه شوند.
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
 		\end{lstlisting}
 	\end{latin}
 			برای تعریف فهرست VLANهای مجاز:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# switchport trunk allowed vlan <vlan-list>
 		\end{lstlisting}
 	\end{latin}
 			برای غیرفعال‌کردن حالت Trunk:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# no switchport mode trunk
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{نمونه پیکربندی Trunk}
 			در مثال زیر، پورت GE2 در حالت Trunk قرار گرفته و VLANهای
 		1، 2، 5 و 6 به‌عنوان VLANهای مجاز روی آن تنظیم شده‌اند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface GigabitEthernet 2
@@ -2110,18 +2170,18 @@
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{بررسی وضعیت Access و Trunk}
 			برای مشاهده تنظیمات عملیاتی یک پورت، از دستور زیر استفاده کنید:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show interface <interface-id> switchport
 		\end{lstlisting}
 	\end{latin}
 			نمونه:
-		
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show interface GigabitEthernet 2 switchport
@@ -2129,289 +2189,289 @@
 	\end{latin}
 			همچنین برای بررسی فهرست VLANها و پورت‌های Trunk می‌توان از
 		دستور زیر استفاده کرد:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show vlan
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{نکته مهم درباره Trunk}			پیش از تغییر حالت یک پورت از Access به Trunk یا برعکس، VLANهای
 			مجاز، نوع تجهیز متصل و وضعیت لینک طرف مقابل را بررسی کنید.			عدم تطابق تنظیمات دو طرف می‌تواند باعث قطع ارتباط VLANها شود.
 		\end{cautionbox}
-	
+
 	\begin{tipbox}{روش پیشنهادی بررسی}			پس از تنظیم Access یا Trunk، ابتدا خروجی
 			\lr{show interface switchport} و سپس خروجی
 		\lr{show vlan} را بررسی کنید. در لینک‌های بین سوییچ‌ها، تنظیمات			حالت Trunk و فهرست VLANهای مجاز باید در هر دو طرف لینک با یکدیگر
 			هماهنگ باشند.
 	\end{tipbox}
-	
+
 	% ============================================================================
 	% فصل: تنظیمات IP و Gateway
 	% ============================================================================
-	
+
 	\chapter{تنظیمات IP و Gateway}
-	
+
 	\section{مقدمه}
-	
+
 	برای مدیریت از راه دور سوییچ لایه دو، باید یک آدرس IP مدیریتی روی
 	\lr{VLAN1} یا \lr{Interface VLAN} مربوطه تنظیم شود. این آدرس برای
 	دسترسی از طریق شبکه، پایش وضعیت و انجام برخی عملیات مدیریتی استفاده
 	می‌شود.
-	
+
 	در سوییچ DT7429، تنظیم IP مدیریتی معمولاً از طریق وارد شدن به
 	\lr{VLAN1} انجام می‌شود. همچنین برای ارتباط با شبکه‌های خارج از
 	ساب‌نت محلی، باید \lr{Default Gateway} نیز تعریف شود.
-	
+
 	\section{ورود به Interface VLAN}
-	
+
 	برای ورود به رابط VLAN1، از دستور زیر در حالت پیکربندی استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface vlan1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	پس از ورود به این بخش، خط فرمان به حالت
 	\lr{config-if} تغییر می‌کند.
-	
-	
+
+
 	\section{تنظیم آدرس IP و Mask}
-	
+
 	برای اختصاص آدرس IP مدیریتی و Subnet Mask به VLAN1:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# ip address 172.16.10.2 255.255.255.0
 		\end{lstlisting}
 	\end{latin}
-	
+
 	این تنظیم باعث می‌شود سوییچ از طریق شبکه با آدرس
 	\lr{172.16.10.2} قابل دسترسی باشد.
-	
+
 	\begin{cmdtable}{IP Configuration Commands}
 		\texttt{DT7429(config-if)\# ip address \textit{\textless ip-address\textgreater} \textit{\textless mask\textgreater}} &
 		Assign an IP address and subnet mask to the VLAN interface \\
-		
+
 		\texttt{DT7429(config-if)\# no ip address} &
 		Remove the configured IP address from the VLAN interface
 	\end{cmdtable}
-	
+
 	برای حذف IP تنظیم‌شده:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# no ip address
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{نکته}
 		در برخی نسخه‌های Firmware ممکن است شکل دقیق دستور حذف، اندکی
 		متفاوت باشد؛ با این حال فرم استاندارد و ایمن برای حذف IP، استفاده
 		از \lr{no ip address} است.
 	\end{tipbox}
-	
-	
+
+
 	\section{تنظیم Default Gateway}
-	
+
 	برای اینکه سوییچ بتواند با شبکه‌های خارج از subnet محلی ارتباط
 	داشته باشد، باید Gateway پیش‌فرض تنظیم شود:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# ip default-gateway 172.16.10.1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Default Gateway Configuration Commands}
 		\texttt{DT7429(config)\# ip default-gateway \textit{\textless gateway-ip\textgreater}} &
 		Set the default gateway for management traffic \\
-		
+
 		\texttt{DT7429(config)\# no ip default-gateway} &
 		Remove the configured default gateway
 	\end{cmdtable}
-	
+
 	برای حذف Gateway تنظیم‌شده:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# no ip default-gateway
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		بدون تنظیم Gateway، دسترسی به شبکه‌های خارج از ساب‌نت محلی ممکن
 		نخواهد بود؛ بنابراین در صورت نیاز به مدیریت از راه دور، این تنظیم
 		باید انجام شود.
 	\end{cautionbox}
-	
-	
+
+
 	\section{بازگشت به حالت Global}
-	
+
 	پس از پایان تنظیمات Interface، برای خروج از حالت \lr{config-if}
 	و بازگشت به حالت سراسری از دستور زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if)# exit
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{نمایش تنظیمات IP}
-	
+
 	برای مشاهده خلاصه وضعیت IP همه Interfaceها:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show ip interface brief
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای مشاهده اطلاعات IP یک VLAN مشخص:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show ip interface vlan <vlan>
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{روش بررسی}
 		پس از تنظیم IP و Gateway، ابتدا با دستور
 		\lr{show ip interface brief} وضعیت کلی را بررسی کنید و سپس با
 		\lr{show ip interface vlan <vlan>} جزئیات همان VLAN را مشاهده
 		نمایید.
 	\end{tipbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: Link Aggregation
 	% ============================================================================
-	
+
 	\chapter{Link Aggregation}
-	
+
 	\section{مقدمه}
-	
+
 	قابلیت \lr{Link Aggregation} امکان تجمیع چند پورت فیزیکی در یک
 	گروه منطقی را فراهم می‌کند. این روش برای افزایش پهنای باند،
 	افزایش افزونگی و بهبود تحمل خطا کاربرد دارد.
-	
+
 	در DT7429 می‌توان از دستور \lr{aggregation group} برای تشکیل
 	گروه تجمیع استفاده کرد. همچنین با استفاده از دستور \lr{no} می‌توان
 	این قابلیت را حذف یا غیرفعال نمود.
-	
+
 	\section{تنظیمات کلی Aggregation}
-	
+
 	برای حذف یک گروه تجمیع:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# no aggregation group <group-id>
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Global Aggregation Commands}
 		\texttt{DT7429(config)\# no aggregation group \textit{\textless group-id\textgreater}} &
 		Remove the specified aggregation group \\
-		
+
 		\texttt{DT7429(config)\# aggregation mode smac} &
 		Set source MAC as the hash mode \\
-		
+
 		\texttt{DT7429(config)\# aggregation mode dmac} &
 		Set destination MAC as the hash mode \\
-		
+
 		\texttt{DT7429(config)\# aggregation mode ip} &
 		Set IP address as the hash mode \\
-		
+
 		\texttt{DT7429(config)\# aggregation mode port} &
 		Set TCP/UDP port as the hash mode \\
-		
+
 		\texttt{DT7429(config)\# no aggregation mode} &
 		Restore the default aggregation mode (source MAC only)
 	\end{cmdtable}
-	
+
 	حالت‌های قابل تنظیم برای توزیع ترافیک عبارت‌اند از:
-	
+
 	\begin{itemize}
 		\item \lr{smac}: مبتنی بر آدرس MAC مبدأ
 		\item \lr{dmac}: مبتنی بر آدرس MAC مقصد
 		\item \lr{ip}: مبتنی بر آدرس IP
 		\item \lr{port}: مبتنی بر شماره پورت‌های TCP/UDP
 	\end{itemize}
-	
+
 	برای فعال‌سازی هم‌زمان چند روش هش می‌توان از ترکیب زیر استفاده کرد:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# aggregation mode smac dmac ip port
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای مشاهده حالت فعلی تجمیع:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show aggregation mode
 			DT7429# show aggregation
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{تنظیم Aggregation روی Interface}
-	
+
 	ابتدا وارد بازه پورت‌های مورد نظر شوید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface range GigabitEthernet 1-2
 		\end{lstlisting}
 	\end{latin}
-	
+
 	سپس پورت‌ها را به گروه شماره 1 اضافه کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if-range)# aggregation group 1
 		\end{lstlisting}
 	\end{latin}
-	
+
 	برای فعال‌سازی گروه:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if-range)# aggregation group 1 on
 		\end{lstlisting}
 	\end{latin}
-	
+
 	همچنین می‌توان مد کاری گروه را به‌صورت زیر تعیین کرد:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if-range)# aggregation group <aggr_no> mode active
 			DT7429(config-if-range)# aggregation group <aggr_no> mode passive
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Interface Aggregation Commands}
 		\texttt{DT7429(config-if-range)\# aggregation group \textit{\textless group-id\textgreater}} &
 		Add the selected interfaces to the aggregation group \\
-		
+
 		\texttt{DT7429(config-if-range)\# aggregation group \textit{\textless aggr\_no\textgreater} on} &
 		Enable the aggregation group \\
-		
+
 		\texttt{DT7429(config-if-range)\# aggregation group \textit{\textless aggr\_no\textgreater} mode active} &
 		Set the group to LACP active mode \\
-		
+
 		\texttt{DT7429(config-if-range)\# aggregation group \textit{\textless aggr\_no\textgreater} mode passive} &
 		Set the group to LACP passive mode
 	\end{cmdtable}
-	
-	
+
+
 	\section{مثال عملی Link Aggregation}
-	
+
 	در مثال زیر، پورت‌های GE1 و GE2 در گروه 1 تجمیع شده‌اند:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config)# interface range GigabitEthernet 1-2
@@ -2420,15 +2480,15 @@
 			DT7429(config-if-range)# do show aggregation
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
-			
+
 			LACP info:
 			D       Down
 			W       Waiting
@@ -2439,9 +2499,9 @@
 			1         on         Ge1(P),Ge2(P),
 		\end{lstlisting}
 	\end{latin}
-	
+
 	اگر گروه به حالت \lr{passive} تنظیم شود:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if-range)# no aggregation group
@@ -2449,15 +2509,15 @@
 			DT7429(config-if-range)# do show aggregation
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
-			
+
 			LACP info:
 			D       Down
 			W       Waiting
@@ -2468,24 +2528,24 @@
 			1         passive    Ge1(P),Ge2(P),
 		\end{lstlisting}
 	\end{latin}
-	
+
 	و در حالت \lr{active}:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429(config-if-range)# aggregation group 1 mode active
 			DT7429(config-if-range)# do show aggregation
 		\end{lstlisting}
 	\end{latin}
-	
+
 	نمونه خروجی:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
-			
+
 			LACP info:
 			D       Down
 			W       Waiting
@@ -2496,185 +2556,185 @@
 			1         active     Ge1(P),Ge2(P),
 		\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{نمایش وضعیت تجمیع}
-	
+
 	برای بررسی وضعیت گروه‌های تجمیع‌شده و مد کاری آن‌ها از دستورات
 	زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 			DT7429# show aggregation mode
 			DT7429# show aggregation
 		\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{tipbox}{نکته مدیریتی}
 		پس از ایجاد یا تغییر گروه تجمیع، بهتر است وضعیت لینک، LACP و
 		سازگاری تنظیمات دو سمت لینک را بررسی کنید. عدم هماهنگی در
 		حالت‌های \lr{active/passive} یا تعداد پورت‌های عضو می‌تواند باعث
 		عدم تشکیل صحیح گروه شود.
 	\end{tipbox}
-	
+
 	% ============================================================================
 	% فصل: تنظیم و فعال‌سازی NTP
 	% ============================================================================
-	
+
 	\chapter{تنظیم و فعال‌سازی NTP}
-	
+
 	\section{مقدمه}
-	
+
 	پروتکل \lr{NTP (Network Time Protocol)} به تجهیزات شبکه اجازه می‌دهد
 	ساعت و تاریخ خود را با یک سرور زمان مرجع هماهنگ کنند. تنظیم صحیح زمان
 	برای بررسی Logها، عیب‌یابی رخدادها، ثبت هشدارها و تحلیل وضعیت شبکه
 	اهمیت زیادی دارد.
-	
+
 	برای استفاده از سرویس \lr{NTP}، سوییچ باید به سرور زمان دسترسی شبکه‌ای
 	داشته باشد. بنابراین لازم است روی \lr{VLAN1}، یا VLANی که مسیر اتصال
 	به شبکه بالادست یا اینترنت در آن قرار دارد، آدرس IP و Default Gateway
 	تنظیم شده باشد.
-	
+
 	\section{تنظیم سرور NTP}
-	
+
 	برای معرفی سرور NTP، در حالت پیکربندی سراسری از دستور زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# ntp server 192.168.0.3
 		\end{lstlisting}
 	\end{latin}
-	
+
 	در این مثال، آدرس \lr{192.168.0.3} به‌عنوان سرور زمان برای سوییچ
 	تعریف می‌شود.
-	
+
 	\begin{cmdtable}{NTP Configuration Commands}
 		\texttt{DT7429(config)\# ntp server \textit{\textless ip-address\textgreater}} &
 		Configure an NTP server \\
-		
+
 		\texttt{DT7429(config)\# no ntp} &
 		Disable the NTP service \\
-		
+
 		\texttt{DT7429\# show clock} &
 		Display the current system clock
 	\end{cmdtable}
-	
-	
+
+
 	\section{مشاهده ساعت سوییچ}
-	
+
 	برای مشاهده ساعت و تاریخ فعلی ثبت‌شده روی سوییچ، از دستور زیر استفاده
 	کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# show clock
 		\end{lstlisting}
 	\end{latin}
-	
+
 	پس از تنظیم NTP و برقراری ارتباط با سرور زمان، ساعت نمایش‌داده‌شده
 	باید با زمان مرجع شبکه هماهنگ شود.
-	
-	
+
+
 	\section{غیرفعال‌سازی سرویس NTP}
-	
+
 	برای غیرفعال کردن سرویس NTP، دستور زیر را در حالت پیکربندی سراسری
 	وارد کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# no ntp
 	\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		پیش از تنظیم NTP، اطمینان حاصل کنید که Interface VLAN مربوطه دارای
 		IP معتبر، فعال و دارای مسیر دسترسی به NTP Server است. در صورتی که
 		سرور NTP خارج از Subnet محلی قرار دارد، تنظیم Default Gateway نیز
 		ضروری است.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: DHCP Server و DHCP Client
 	% ============================================================================
-	
+
 	\chapter{DHCP Server و DHCP Client}
-	
+
 	\section{مقدمه}
-	
+
 	\lr{DHCP (Dynamic Host Configuration Protocol)} پروتکلی برای تخصیص
 	خودکار تنظیمات شبکه به Clientها است. یک DHCP Server می‌تواند اطلاعاتی
 	مانند آدرس IP، Subnet Mask، Default Gateway و DNS Server را به‌صورت
 	خودکار در اختیار دستگاه‌های متصل به شبکه قرار دهد.
-	
+
 	سوییچ DT7429 می‌تواند در دو نقش متفاوت استفاده شود:
-	
+
 	\begin{itemize}
 		\item \textbf{DHCP Server}: تخصیص آدرس و تنظیمات شبکه به Clientها.
 		\item \textbf{DHCP Client}: دریافت خودکار IP برای Interface VLAN از DHCP Server موجود در شبکه.
 	\end{itemize}
-	
+
 	\section{فعال‌سازی DHCP Server}
-	
+
 	برای راه‌اندازی DHCP Server، ابتدا باید یک \lr{DHCP Pool} ایجاد و
 	تنظیمات شبکه مورد نظر در آن تعریف شود. سپس سرویس DHCP در سطح سراسری
 	فعال می‌شود.
-	
+
 	فرمان‌های اصلی DHCP در حالت پیکربندی سراسری عبارت‌اند از:
-	
+
 	\begin{cmdtable}{DHCP Global Commands}
 		\texttt{DT7429(config)\# ip dhcp pool \textit{\textless pool-name\textgreater}} &
 		Create or enter a DHCP address pool \\
-		
+
 		\texttt{DT7429(config)\# service dhcp} &
 		Enable the DHCP service \\
-		
+
 		\texttt{DT7429(config)\# no service dhcp} &
 		Disable the DHCP service \\
-		
+
 		\texttt{DT7429(config)\# no ip dhcp pool \textit{\textless pool-name\textgreater}} &
 		Delete the specified DHCP pool \\
-		
+
 		\texttt{DT7429(config)\# ip routing} &
 		Enable IP routing, if Layer 3 routing is required \\
-		
+
 		\texttt{DT7429(config)\# ip default-gateway \textit{\textless ip-address\textgreater}} &
 		Configure the management default gateway
 	\end{cmdtable}
-	
-	
+
+
 	\section{ایجاد DHCP Pool}
-	
+
 	برای ساخت یک Pool، ابتدا نامی برای آن تعیین کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# ip dhcp pool aa
 	\end{lstlisting}
 	\end{latin}
-	
+
 	پس از ورود به حالت \lr{dhcp-config}، می‌توان پارامترهای Pool را
 	تنظیم کرد.
-	
+
 	\begin{cmdtable}{DHCP Pool Commands}
 		\texttt{DT7429(dhcp-config)\# network \textit{\textless network\textgreater} \textit{\textless mask\textgreater}} &
 		Configure the network address and subnet mask \\
-		
+
 		\texttt{DT7429(dhcp-config)\# default-router \textit{\textless ip-address\textgreater}} &
 		Configure the default gateway for DHCP clients \\
-		
+
 		\texttt{DT7429(dhcp-config)\# dns-server \textit{\textless ip-address\textgreater}} &
 		Configure the DNS server for DHCP clients \\
-		
+
 		\texttt{DT7429(dhcp-config)\# range-address \textit{\textless start-ip\textgreater} \textit{\textless end-ip\textgreater}} &
 		Configure the assignable IP address range \\
-		
+
 		\texttt{DT7429(dhcp-config)\# exit} &
 		Exit DHCP pool configuration mode
 	\end{cmdtable}
-	
+
 	مراحل اصلی تعریف یک Pool به شرح زیر است:
-	
+
 	\begin{enumerate}
 		\item ایجاد Pool و تعیین نام آن با دستور \lr{ip dhcp pool}.
 		\item تعیین Network Address و Subnet Mask.
@@ -2683,185 +2743,185 @@
 		\item تعریف محدوده IP قابل تخصیص.
 		\item خروج از حالت DHCP Configuration و فعال‌سازی سرویس DHCP.
 	\end{enumerate}
-	
-	
+
+
 	\section{نمونه پیکربندی DHCP Server}
-	
+
 	در مثال زیر، ابتدا IP مدیریتی سوییچ روی \lr{VLAN1} تنظیم شده و سپس
 	یک DHCP Pool با نام \lr{test} ساخته می‌شود.
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# configure terminal
-		
+
 		DT7429(config)\# interface vlan 1
 		DT7429(config-if)\# ip address 192.168.1.5 255.255.255.0
 		DT7429(config-if)\# no shutdown
 		DT7429(config-if)\# exit
-		
+
 		DT7429(config)\# ip dhcp pool test
 		DT7429(dhcp-config)\# network 192.168.1.0 255.255.255.0
 		DT7429(dhcp-config)\# default-router 192.168.1.1
 		DT7429(dhcp-config)\# dns-server 4.2.2.4
 		DT7429(dhcp-config)\# range-address 192.168.1.10 192.168.1.200
 		DT7429(dhcp-config)\# exit
-		
+
 		DT7429(config)\# service dhcp
 	\end{lstlisting}
 	\end{latin}
-	
+
 	در این مثال، DHCP Server می‌تواند IPهای بازه
 	\lr{192.168.1.10} تا \lr{192.168.1.200} را به Clientها اختصاص دهد.
-	
+
 	\begin{tipbox}{نکته}
 		آدرس‌های رزروشده، آدرس Gateway، IP مدیریتی سوییچ و آدرس سایر
 		تجهیزات ثابت شبکه نباید در محدوده قابل تخصیص DHCP قرار گیرند.
 	\end{tipbox}
-	
-	
+
+
 	\section{بررسی وضعیت DHCP Server}
-	
+
 	برای مشاهده آدرس‌های IP تخصیص‌یافته به Clientها، از دستور زیر استفاده
 	کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# show ip binding
 	\end{lstlisting}
 	\end{latin}
-	
+
 	برای مشاهده Poolهای DHCP تعریف‌شده روی سوییچ:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# show ip pool
 	\end{lstlisting}
 	\end{latin}
-	
+
 	پس از تکمیل تنظیمات، برای ذخیره پیکربندی جاری در Startup Configuration
 	از دستور زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# copy running-config startup-config
 	\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{حذف DHCP Pool و غیرفعال‌سازی DHCP Server}
-	
+
 	برای حذف یک Pool مشخص، مانند Pool با نام \lr{Floor1DHCP}، از دستور
 	زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# no ip dhcp pool Floor1DHCP
 	\end{lstlisting}
 	\end{latin}
-	
+
 	برای غیرفعال‌سازی کامل سرویس DHCP نیز دستور زیر را وارد کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# no service dhcp
 	\end{lstlisting}
 	\end{latin}
-	
-	
+
+
 	\section{تنظیم DHCP Client روی VLAN}
-	
+
 	سوییچ می‌تواند برای دریافت خودکار IP روی Interface VLAN، به‌صورت
 	DHCP Client عمل کند. این حالت برای دریافت تنظیمات مدیریتی از یک DHCP
 	Server موجود در شبکه کاربرد دارد.
-	
+
 	ابتدا وارد حالت پیکربندی VLAN مورد نظر شوید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429\# configure terminal
 		DT7429(config)\# interface vlan 1
 	\end{lstlisting}
 	\end{latin}
-	
+
 	برای فعال کردن دریافت خودکار IP از DHCP Server:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config-if)\# ip address dhcp
 		DT7429(config-if)\# no shutdown
 	\end{lstlisting}
 	\end{latin}
-	
+
 	برای غیرفعال کردن دریافت IP از DHCP Server:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config-if)\# no ip address dhcp
 	\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cautionbox}{هشدار}
 		هنگام استفاده از \lr{DHCP Client} روی VLAN1، IP مدیریتی سوییچ به‌صورت
 		پویا تغییر می‌کند. برای دسترسی مجدد به سوییچ، باید آدرس اختصاص‌یافته
 		را از طریق DHCP Server یا دستورهای نمایش وضعیت Interface بررسی کنید.
 	\end{cautionbox}
-	
-	
+
+
 	% ============================================================================
 	% فصل: تنظیم سرعت فن
 	% ============================================================================
-	
+
 	\chapter{تنظیم سرعت فن}
-	
+
 	\section{مقدمه}
-	
+
 	سرعت فن سوییچ DT7429 قابل تنظیم است. این قابلیت برای مدیریت میزان
 	خنک‌سازی، کاهش مصرف انرژی و کنترل صدای ایجادشده توسط فن کاربرد دارد.
-	
+
 	مقدار سرعت فن در بازه \lr{0} تا \lr{255} تنظیم می‌شود:
-	
+
 	\begin{itemize}
 		\item \lr{0}: حداقل سرعت یا خاموش بودن فن
 		\item \lr{255}: حداکثر سرعت فن
 	\end{itemize}
-	
+
 	\section{تنظیم سرعت فن}
-	
+
 	برای تنظیم سرعت فن، در حالت پیکربندی سراسری از دستور زیر استفاده کنید:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# fan speed <0-255>
 	\end{lstlisting}
 	\end{latin}
-	
+
 	برای نمونه، تنظیم سرعت فن روی مقدار \lr{128}:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# fan speed 128
 		\end{lstlisting}
 	\end{latin}
-	
+
 	و برای تنظیم فن روی بیشترین سرعت:
-	
+
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# fan speed 255
 	\end{lstlisting}
 	\end{latin}
-	
+
 	\begin{cmdtable}{Fan Speed Command}
 		\texttt{DT7429(config)\# fan speed \textit{\textless 0-255\textgreater}} &
 		Configure the fan speed level
 	\end{cmdtable}
-	
+
 	\begin{cautionbox}{هشدار}
 		تنظیم سرعت فن روی مقدار بسیار پایین، به‌ویژه در محیط‌های گرم، رک‌های
 		بسته یا هنگام بار ترافیکی بالا، ممکن است باعث افزایش دمای دستگاه شود.
 		برای حفظ پایداری و طول عمر تجهیزات، سرعت فن را متناسب با دمای محیط
 		تنظیم کنید.
 	\end{cautionbox}
-	
+
 
 \end{document}
