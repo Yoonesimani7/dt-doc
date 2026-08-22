@@ -95,7 +95,7 @@
 
 \fancyfoot[L]{%
 	\small\color{gray}
-	\lr{Chapter 4: VLAN Configuration}%
+	\lr{Doc: VAF-11111111}%
 }
 
 \fancyfoot[R]{%
@@ -253,7 +253,7 @@
 
 		\vspace{0.5cm}
 
-		{\large Version 1.0\par}
+		{\large \lr{Version 1.0}\par}
 		\vspace{0.4cm}
 		{\large \today\par}
 	\end{titlepage}
@@ -287,13 +287,76 @@
 	% ============================================================================
 	\chapter{نمای کلی و روش استفاده از CLI}
 
-	\section{معرفی سوییچ DT7429}
-	این بخش برای تکمیل مشخصات کلی، قابلیت‌های اصلی و محدودیت‌های
-	سخت‌افزاری سوییچ DT7429 در نظر گرفته شده است.
+	\section{معرفی سوییچ \lr{DT7429}}
+		
+		سوییچ \lr{DT7429} یک سوییچ مدیریتی لایه~2 گیگابیتی با قابلیت
+		\lr{PoE} است که به‌صورت مستقل توسعه یافته و برای استفاده در شبکه‌های
+		سازمانی، نظارتی، صنعتی و زیرساخت‌های ارتباطی طراحی شده است.
+		
+		این محصول در دو نسخه با تعداد پورت‌های متفاوت ارائه می‌شود:
+		
+		\begin{itemize}
+			\item نسخه \lr{8-Port}: دارای 8 پورت گیگابیتی \lr{RJ45 1000Base-T}
+			و 2 پورت فیبر نوری \lr{SFP 1000Base-X}.
+			
+			\item نسخه \lr{24-Port}: دارای 24 پورت گیگابیتی \lr{RJ45 1000Base-T}
+			و 2 پورت فیبر نوری \lr{SFP 1000Base-X}.
+		\end{itemize}
+		
+		پورت‌های اترنت این سوییچ از استانداردهای \lr{IEEE 802.3af} و
+		\lr{IEEE 802.3at} برای تأمین توان از طریق شبکه، یعنی \lr{PoE}،
+		پشتیبانی می‌کنند. بنابراین می‌توان تجهیزاتی مانند دوربین‌های تحت شبکه،
+		تلفن‌های \lr{IP}، Access Pointها و سایر تجهیزات سازگار با \lr{PoE} را
+		بدون نیاز به منبع تغذیه محلی، از طریق کابل شبکه تغذیه کرد.
+		
+		حداکثر توان قابل ارائه توسط هر پورت \lr{PoE} برابر با \lr{30W} است.
+		حداکثر بودجه توان \lr{PoE} کل سوییچ، بسته به مدل و منبع تغذیه مورد
+		استفاده، می‌تواند تا \lr{130W} یا \lr{250W} باشد.
+		
+		
 
-	\section{قابلیت‌های Layer 2}
-	این بخش باید قابلیت‌های اصلی Layer 2، از جمله VLAN، STP،
-	Link Aggregation و قابلیت‌های پایش را معرفی کند.
+	\section{قابلیت‌ها و ویژگی‌های سوییچ}
+	
+	سوییچ \lr{DT7429} یک سوییچ مدیریتی لایه~2 با قابلیت \lr{PoE} است که
+	امکانات موردنیاز برای ایجاد شبکه‌ای پایدار، امن و قابل مدیریت را فراهم
+	می‌کند. این سوییچ از مدیریت VLAN، جلوگیری از Loop، کنترل دسترسی،
+	پایش ترافیک و ابزارهای عیب‌یابی شبکه پشتیبانی می‌کند.
+	
+	\begin{itemize}
+		\item \textbf{مدیریت VLAN:}
+		پشتیبانی از \lr{Tagged VLAN}، \lr{Untagged VLAN}، \lr{Native VLAN}،
+		\lr{Private VLAN} و \lr{Virtual Interface}.
+		
+		\item \textbf{پایداری و جلوگیری از Loop:}
+		پشتیبانی از \lr{RSTP}، \lr{MSTP}، \lr{Root Guard}،
+		\lr{BPDU Guard}، \lr{Loop Guard} و \lr{UDLD}.
+		
+		\item \textbf{افزونگی لینک:}
+		پشتیبانی از \lr{EtherChannel} و \lr{Link Aggregation} با قابلیت
+		\lr{LACP}.
+		
+		\item \textbf{امنیت و کنترل دسترسی:}
+		شامل \lr{ACL} و \lr{Extended ACL}، \lr{Port Security}،
+		\lr{DHCP Snooping}، \lr{IEEE 802.1X}، \lr{AAA} و
+		\lr{Privilege Modes}.
+		
+		\item \textbf{مدیریت ترافیک و مانیتورینگ:}
+		پشتیبانی از \lr{Multicast}، \lr{IGMP Snooping}، \lr{SPAN}،
+		\lr{RSPAN}، \lr{sFlow}، \lr{SNMP}، \lr{RMON} و \lr{Syslog}.
+		
+		\item \textbf{مدیریت شبکه:}
+		پشتیبانی از \lr{DHCP Server}، \lr{DHCP Client}، \lr{NTP}،
+		\lr{Ping}، \lr{Telnet} و \lr{Traceroute}.
+		
+		\item \textbf{پایش و عیب‌یابی:}
+		پشتیبانی از \lr{SFP Monitoring} برای بررسی وضعیت ماژول‌های فیبر
+		و \lr{TDR} برای تشخیص مشکلات کابل شبکه.
+		
+		\item \textbf{تغذیه PoE:}
+		پشتیبانی از استانداردهای \lr{IEEE 802.3af/at} برای تأمین برق
+		تجهیزات سازگار با \lr{PoE} از طریق پورت شبکه.
+	\end{itemize}
+	
 
 	\section{پیکربندی پیش‌فرض}
 	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
@@ -330,7 +393,7 @@
 	% ============================================================================
 	% فصل 3: VLAN و پورت‌های Access و Trunk
 	% ============================================================================
-	\chapter{\lr{VLAN Configuration}}
+	\chapter{پیکربندی VLAN}
 	\label{chap:vlan}
 
 	این فصل نحوه پیکربندی
@@ -352,7 +415,7 @@
 	و \lr{QinQ (802.1Q tunneling)} در این دستگاه پشتیبانی می‌شوند.
 
 	% ============================================================================
-	\section{\lr{Configuring Switch Port Modes (Access and Trunk)}}
+	\section{پیکربندی \lr{Switch Port Modes} (\lr{Access and Trunk})}
 	\label{sec:port-modes}
 
 	پیش از آن‌که یک \lr{VLAN} بتواند ترافیک را از طریق یک پورت منتقل کند،
@@ -411,7 +474,7 @@
 		\end{LTR}
 	\end{notebox}
 
-	\subsection{\lr{Configuration Example}}
+	\subsection{مثال پیکربندی}
 
 	مثال زیر، اینترفیس \lr{\texttt{GigabitEthernet2}} را به‌عنوان یک
 	پورت \lr{trunk} پیکربندی کرده و عبور \lr{VLAN}های ۱، ۲، ۵ و ۶ را
@@ -520,7 +583,7 @@
 	\end{enumerate}
 
 	% ============================================================================
-	\section{\lr{Configuring Voice VLAN}}
+	\section{پیکربندی Voice VLAN}
 	\label{sec:voice-vlan}
 
 	قابلیت \lr{Voice VLAN} امکان جداسازی خودکار ترافیک تلفن‌های
@@ -551,7 +614,7 @@
 		\lr{\textbf{access}} فعالیت می‌کند پیکربندی شود.
 	\end{cautionbox}
 
-	\subsection{\lr{Configuration Example}}
+	\subsection{مثال پیکربندی}
 
 	مثال زیر \lr{VLAN 2} را به‌عنوان \lr{voice VLAN} روی اینترفیس
 	\lr{\texttt{GigabitEthernet2}} اختصاص می‌دهد:
@@ -599,7 +662,7 @@
 		\textit{(configured on the promiscuous/uplink port)} \\
 	\end{cmdtable}
 
-	\subsection{\lr{Configuration Example}}
+	\subsection{مثال پیکربندی}
 
 	مثال زیر یک \lr{isolated secondary VLAN} با شناسه \lr{200} و پورت‌های
 	عضو \lr{\texttt{GigabitEthernet1--2}} ایجاد می‌کند. همچنین یک
