@@ -359,16 +359,65 @@
 	
 
 	\section{پیکربندی پیش‌فرض}
-	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+	بررسی میدانی در تاریخ \lr{2026-08-22} روی دستگاه
+	\lr{DT7429-8GE-2GF} با نسخه نرم‌افزار \lr{V01} انجام شد. خروجی
+	\lr{show vlan} نشان داد که فقط \lr{VLAN 1} با نام \lr{default} وجود
+	دارد و در شروع کار هیچ پورت access یا trunk به آن گزارش نشده است.
+	در خروجی \lr{show running-config}، پورت‌های گیگابیتی در حالت
+	\lr{access}، قابلیت \lr{Port Security} و \lr{UDLD} غیرفعال، و
+	\lr{Dot1X} نیز غیرفعال بودند. مقدار پیش‌فرض \lr{Port-Security
+	Maximum} برابر ۱ گزارش شد.
+
+	\begin{notebox}{نکته درباره نسخه نرم‌افزار}
+		فهرست دستورها به نسخه نرم‌افزار وابسته است. خروجی‌های این راهنما
+		برای \lr{DT7429-8GE-2GF, V01} ثبت شده‌اند؛ در مدل یا نسخه‌ای دیگر
+		ممکن است برخی شاخه‌ها یا گزینه‌ها اضافه یا حذف شده باشند.
+	\end{notebox}
 
 	\section{روند کلی پیکربندی}
-	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+	روند معمول کار به‌صورت زیر است:
+	\begin{enumerate}
+		\item در حالت \lr{privileged EXEC} با دستور \lr{configure terminal}
+			وارد حالت پیکربندی شوید.
+		\item با \lr{interface vlan <vid>} یا دستورهای پورت، اینترفیس
+			موردنظر را انتخاب کنید.
+		\item برای مشاهده نحو معتبر هر شاخه، در همان سطح عبارت
+			\lr{<command> ?} را وارد کنید.
+		\item تغییرات را با دستورهای \lr{show} بررسی و در پایان در
+			حافظه راه‌اندازی ذخیره کنید.
+	\end{enumerate}
 
 	\section{حالت‌های مختلف CLI}
-	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+	سه سطح اصلی در آزمون CLI مشاهده شد:
+	\begin{itemize}
+		\item \lr{dt7429\#}: حالت \lr{privileged EXEC} برای دستورهای
+		نمایشی مانند \lr{show} و ورود به پیکربندی.
+		\item \lr{dt7429(config)\#}: حالت پیکربندی سراسری؛ شاخه‌هایی
+		مانند \lr{vlan}، \lr{spanning-tree}، \lr{ntp} و \lr{snmp-server}
+		در این سطح در دسترس هستند.
+		\item \lr{dt7429(config-if)\#}: حالت پیکربندی اینترفیس؛
+		دستورهای \lr{switchport}، \lr{ip}، \lr{qos} و \lr{spanning-tree}
+		در این سطح قرار دارند.
+	\end{itemize}
+	دستور \lr{exit} یک سطح به عقب می‌رود و \lr{end} مستقیماً به
+	\lr{privileged EXEC} بازمی‌گردد. دستور \lr{do <show-command>} برای
+	اجرای دستور نمایشی از حالت پیکربندی قابل استفاده است.
 
 	\section{نحو دستورها و روش بررسی تنظیمات}
-	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+	راهنمای درون‌خطی با علامت سؤال فعال می‌شود؛ برای نمونه:
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429# show ?
+			dt7429# show ip ?
+			dt7429(config)# spanning-tree ?
+			dt7429(config-if)# switchport ?
+		\end{lstlisting}
+	\end{LTR}
+	در صورت نمایش پیام \lr{-- More --}، کلید \lr{Enter} صفحه بعد و
+	کلید \lr{q} خروج از نمایش صفحه‌بندی‌شده را انجام می‌دهد. برای
+	بررسی تغییرات از \lr{show running-config}، \lr{show vlan}،
+	\lr{show interface status} و \lr{show ip interface brief} استفاده
+		کنید.
 
 	% ============================================================================
 	% فصل 2: مدیریت IP و سرویس‌های پایه
@@ -388,7 +437,77 @@
 	محتوای اختصاصی این بخش در فصل «تنظیم و فعال‌سازی NTP» موجود است.
 
 	\section{مدیریت از طریق SNMP و Syslog}
-	محتوای این بخش در نسخه فعلی هنوز تهیه نشده است.
+	برای پایش متمرکز، سوییچ شاخه‌های \lr{SNMP} و \lr{Syslog} را در
+	حالت پیکربندی سراسری ارائه می‌کند. نحو دقیق برخی گزینه‌ها به نسخه
+	نرم‌افزار وابسته است؛ در دستگاه آزموده‌شده (\lr{DT7429-8GE-2GF,
+	V01}) پیش از تکمیل هر دستور، علامت سؤال را در همان سطح وارد کنید.
+
+	\subsection{تنظیم SNMP}
+	برای تعریف یک Community، از دستور زیر استفاده کنید:
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# snmp-server community <name> RO
+			dt7429(config)# snmp-server community <name> RW
+		\end{lstlisting}
+	\end{LTR}
+	سطح \lr{RO} برای پایش فقط‌خواندنی و سطح \lr{RW} برای دسترسی
+	خواندن/نوشتن است. Community را مانند گذرواژه در نظر بگیرید و از
+	مقادیر قابل حدس استفاده نکنید. پس از اعمال تنظیمات، با
+	\lr{show running-config} وجود Community را بررسی کنید و از سامانه
+	مدیریت شبکه یک درخواست آزمایشی \lr{SNMP} ارسال کنید.
+
+	برای تعیین میزبان مدیر SNMP و فعال‌کردن Trapهای مشاهده‌شده، از
+	دستورهای زیر استفاده کنید:
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# snmp-server host <ipv4>
+			dt7429(config)# snmp-server enable traps vlan-membership
+			dt7429(config)# snmp-server enable traps vlancreate
+			dt7429(config)# snmp-server enable traps vlandelete
+		\end{lstlisting}
+	\end{LTR}
+	این سه Trap مربوط به تغییرات عضویت و ایجاد/حذف VLAN هستند و در
+	نسخه آزموده‌شده در راهنمای \lr{snmp-server ?} نمایش داده شدند.
+
+	\begin{cautionbox}{محدودیت نسخه}
+		در پیمایش CLI، شاخه‌های \lr{aaa}، \lr{radius-server}،
+		\lr{tacacs-server} و \lr{crypto} نیز نمایش داده شدند، اما
+		احراز هویت SNMP، ‏\lr{SNMPv3} و جزئیات ACL در این آزمون تأیید
+		نشدند. فعال‌سازی آن‌ها را فقط پس از مشاهده نحو کامل با
+		\lr{snmp-server ?} و آزمون قابل بازگشت انجام دهید.
+	\end{cautionbox}
+
+	\subsection{تنظیم Syslog}
+	برای ارسال پیام‌های سیستمی به یک سرور مرکزی، ابتدا سطح شدت پیام و
+	سپس میزبان Syslog را تنظیم کنید:
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# logging trap <level>
+			dt7429(config)# logging host <server-ip>
+		\end{lstlisting}
+	\end{LTR}
+	مقدار \lr{<level>} را با اجرای \lr{logging trap ?} از فهرست مجاز
+	انتخاب کنید؛ سطح‌های شدیدتر پیام‌های کمتری تولید می‌کنند و سطح‌های
+	پایین‌تر برای عیب‌یابی جزئیات بیشتری می‌فرستند. آدرس
+	\lr{<server-ip>} باید از طریق Interface مدیریتی سوییچ قابل دسترسی
+	باشد؛ در صورت قرارداشتن سرور خارج از Subnet محلی، Default Gateway
+	را نیز تنظیم کنید.
+
+	\begin{cmdtable}{SNMP and Syslog Verification}
+		\texttt{show running-config} &
+		Verify the configured SNMP community and Syslog destination \\
+
+		\texttt{show logging} &
+		Display local logging state and recent messages, if supported \\
+
+		\texttt{show snmp} &
+		Display SNMP state and counters, if supported \\
+	\end{cmdtable}
+
+	اگر \lr{show logging} یا \lr{show snmp} در نسخه نصب‌شده پذیرفته نشد،
+	از \lr{show ?} برای یافتن شاخه معادل استفاده کنید. در پایان، خروجی
+	\lr{show running-config} را ثبت و پیکربندی را در حافظه راه‌اندازی
+	ذخیره کنید.
 
 	% ============================================================================
 	% فصل 3: VLAN و پورت‌های Access و Trunk
@@ -705,6 +824,32 @@
 			200    1,2
 		\end{lstlisting}
 	\end{LTR}
+
+	\section{پیکربندی گروهی با \lr{Interface Range}}
+
+	برای اعمال یک تنظیم یکسان روی چند پورت، از حالت
+	\lr{config-if-range} استفاده کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			DT7429(config)# interface range GigabitEthernet 1-9
+			DT7429(config-if-range)# switchport mode access
+			DT7429(config-if-range)# switchport access vlan 10
+		\end{lstlisting}
+	\end{LTR}
+
+	برای انتخاب پورت‌های غیرپیوسته، شناسه‌ها را با ویرگول جدا کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			DT7429(config)# interface range GigabitEthernet 1,3,5
+		\end{lstlisting}
+	\end{LTR}
+
+	پیش از اعمال تنظیم، وجود همه پورت‌ها و سازگاری حالت فعلی آن‌ها را
+	بررسی کنید. برای بازگشت به حالت پیکربندی سراسری، \lr{exit} یا
+	\lr{end} را اجرا کنید. این دستورها در نسخه آزموده‌شده در
+	\lr{interface ?} با الگوهای \lr{n|1-26|1,2,..} اعلام شدند.
 
 	\chapter{پیکربندی Spanning Tree Protocol (STP)}
 
@@ -1894,8 +2039,10 @@
 
 
 		% ============================================================================
-		% فصل: Interface Range
+		% فصل حذف‌شده: Interface Range
+		% محتوای ضروری به فصل «پیکربندی VLAN» منتقل شد.
 		% ============================================================================
+		\iffalse
 
 		\chapter{پیکربندی هم‌زمان چند پورت با Interface Range}
 
@@ -1969,6 +2116,7 @@
 		\end{cautionbox}
 
 
+		\fi
 		% ============================================================================
 		% فصل: SFP Monitoring
 		% ============================================================================
@@ -2121,8 +2269,11 @@
 
 
 		% ============================================================================
-		% فصل: Access و Trunk
+		% فصل حذف‌شده: Access و Trunk / Interface Diagnostics
+		% محتوای Access و Trunk در فصل «پیکربندی VLAN» موجود است؛
+		% پایش سرعت، SFP و TDR نیز فصل‌های مستقل دارند.
 		% ============================================================================
+		\iffalse
 
 	\chapter{ویژگی‌های Interface و تشخیص خطا}
 
@@ -2269,6 +2420,7 @@
 			هماهنگ باشند.
 	\end{tipbox}
 
+	\fi
 	% ============================================================================
 	% فصل: تنظیمات IP و Gateway
 	% ============================================================================
@@ -2929,6 +3081,473 @@
 		را از طریق DHCP Server یا دستورهای نمایش وضعیت Interface بررسی کنید.
 	\end{cautionbox}
 
+	% ============================================================================
+	% فصل: مرجع CLI استخراج‌شده از دستگاه
+	% ============================================================================
+
+	\chapter{مرجع CLI استخراج‌شده از دستگاه}
+
+	این فصل بر اساس پیمایش تعاملی دستور \lr{?} روی یک دستگاه واقعی
+	\lr{DT7429-8GE-2GF} با نسخه \lr{V01} تهیه شده است. علامت \lr{?}
+	در هر سطح، دستورها و پارامترهای معتبر همان سطح را نمایش می‌دهد؛
+	بنابراین این فصل مرجع عملی نسخه آزمایش‌شده است و بر فهرست‌های
+	کلیشه‌ای \lr{Cisco IOS} اولویت دارد.
+
+	\section{دستورهای حالت \lr{privileged EXEC}}
+
+	\begin{cmdtable}{Verified EXEC Command Tree}
+		\texttt{show ?} &
+		Display available show-command branches \\
+
+		\texttt{show interface ?} &
+		Display interface status, PVID, description, and transceiver options \\
+
+		\texttt{show ip ?} &
+		Display IP interface, DHCP pool/binding, IGMP Snooping, and DHCP Snooping information \\
+
+		\texttt{show mac ?} &
+		Display the complete, static, or dynamic MAC address table \\
+
+		\texttt{show running-config ?} &
+		Display the running configuration or its dump output \\
+
+		\texttt{show monitor session} &
+		Display SPAN/RSPAN monitor-session status \\
+
+		\texttt{show version} &
+		Display model, serial number, software version, and hardware revision \\
+	\end{cmdtable}
+
+	\begin{notebox}{نمونه خروجی شناسایی}
+		در آزمون، \lr{show version} مقدارهای زیر را گزارش کرد:
+		\lr{Model number: DT7429-8GE-2GF}، \lr{Version ID: V01} و
+		\lr{Hardware Board Revision: V3.0}. شماره سریال در این راهنما
+		ثبت نشده است تا متن مستقل از یک دستگاه باقی بماند.
+	\end{notebox}
+
+	\section{دستورهای حالت \lr{global configuration}}
+
+	در تاریخ \lr{2026-08-24}، پس از ورود به حالت
+	\lr{dt7429(config)\#}، دستور \lr{?} به‌صورت سلسله‌مراتبی پیمایش شد.
+	فهرست زیر عین نحو مشاهده‌شده در سطح نخست است؛ شاخه‌های دارای علامت
+	\lr{?} در ادامه نیز جداگانه باز شدند.
+
+	\begin{cmdtable}{Verified Global Configuration Tree}
+		\texttt{interface GigabitEthernet <port-id>} &
+		Enter physical-interface configuration mode \\
+
+		\texttt{interface range GigabitEthernet <port-list>} &
+		Select multiple physical interfaces using a range or comma-separated list \\
+
+		\texttt{interface vlan <vid>} &
+		Enter VLAN-interface configuration mode \\
+
+		\texttt{vlan <id>} &
+		Create or enter VLAN configuration mode \\
+
+		\texttt{aggregation mode \{smac|dmac|ip|port\}} &
+		Select the link-aggregation load-balancing algorithm \\
+
+		\texttt{spanning-tree \{enable|mode|priority\}} &
+		Enable STP, select STP/RSTP/MSTP mode, or set bridge priority \\
+
+		\texttt{ntp <server-ip>} &
+		Configure an NTP peer/server address \\
+
+		\texttt{service dhcp} &
+		Enable the DHCP server and relay service \\
+
+		\texttt{ip default-gateway <ip-address>} &
+		Configure the management default gateway \\
+
+		\texttt{ip ssh version} &
+		Enter or enable the SSH version configuration branch \\
+
+		\texttt{monitor session ...} &
+		Configure SPAN/RSPAN source and destination interfaces or VLANs \\
+
+		\texttt{logging trap \textit{level}} &
+		Configure the Syslog severity level \\
+
+		\texttt{logging host <ip>} &
+		Configure a remote Syslog host \\
+
+		\texttt{snmp-server community <name> \{RO|RW\}} &
+		Define an SNMP community with read-only or read-write access \\
+
+		\texttt{username <name> [privilege <1-15>] [password <pass>]} &
+		Create a user and configure its privilege level and password \\
+
+		\texttt{udld enable} &
+		Enable UDLD for fiber links \\
+
+		\texttt{errdisable detect/recovery ...} &
+		Configure error-disable detection and recovery for supported causes \\
+	\end{cmdtable}
+
+	\subsection{نحو دقیق شاخه‌های پیکربندی مشاهده‌شده}
+	\begin{cmdtable}{Observed Global Command Syntax}
+		\texttt{qos trust dscp} / \texttt{qos dscp <value>} &
+		Configure global QoS trust or DSCP value \\
+
+		\texttt{spanning-tree enable} &
+		Enable spanning tree \\
+
+		\texttt{spanning-tree mode \{stp|rstp|mstp\}} &
+		Select the spanning-tree mode \\
+
+		\texttt{spanning-tree priority <prio>} &
+		Set bridge priority; observed values range from 0 to 61440 in steps of 4096 \\
+
+		\texttt{ntp server <ip|host>} / \texttt{ntp status} &
+		Configure an NTP peer or display NTP status \\
+
+		\texttt{ip dhcp pool <pool-name>} &
+		Enter DHCP-pool configuration \\
+
+		\texttt{ip routing} &
+		Enable IP routing \\
+
+		\texttt{ip default-gateway <ip-address>} &
+		Configure the default gateway \\
+
+		\texttt{logging trap \{off|trace|debug|info|error\}} &
+		Set the Syslog severity threshold \\
+
+		\texttt{snmp-server community <str> \{RO|RW\}} &
+		Configure an SNMP read-only or read-write community \\
+
+		\texttt{snmp-server enable traps \{vlan-membership|vlancreate|vlandelete\}} &
+		Enable the observed VLAN-related SNMP traps \\
+
+		\texttt{snmp-server host <ipv4>} &
+		Configure the SNMP management host \\
+
+		\texttt{radius-server host <ipv4> auth-port <port> acct-port <port> key <key>} &
+		Configure a RADIUS server; ports are 1--65535 and key length is 1--255 \\
+
+		\texttt{tacacs-server host <ipv4> key <key>} &
+		Configure a TACACS+ server \\
+
+		\texttt{dot1x system-auth-control} &
+		Enable global 802.1X authentication \\
+
+		\texttt{aaa authentication|authorization|accounting ...} &
+		Configure the observed TACACS+ AAA login, authorization, and accounting forms \\
+
+		\texttt{monitor session source|destination ...} &
+		Configure local or remote SPAN source/destination interfaces or VLANs \\
+
+		\texttt{policy-map <policy-id>} &
+		Enter policy-map configuration; observed policy IDs are 1--16 \\
+
+		\texttt{sflow collector <ipv4> <port>} &
+		Configure the sFlow collector \\
+
+		\texttt{errdisable detect|recovery ...} &
+		Configure causes \{all, udld, loop-guard, bpdu-guard, port-security\}; recovery interval is 30--86400 seconds \\
+
+		\texttt{rmon alarm ...} / \texttt{rmon event ...} &
+		Configure RMON alarms and events \\
+	\end{cmdtable}
+
+	\section{دستورهای حالت \lr{interface configuration}}
+
+	با اجرای \lr{interface GigabitEthernet 1} و سپس \lr{?}، فهرست
+	حالت اینترفیس شامل شاخه‌های \lr{speed}، \lr{duplex}، \lr{ip}،
+	\lr{switchport}، \lr{aggregation}، \lr{qos}،
+	\lr{spanning-tree}، \lr{Authentication}، \lr{dot1x}، \lr{mac}،
+	\lr{service-policy}، \lr{udld}، \lr{description} و \lr{mtu} مشاهده
+	شد.
+
+	\begin{cmdtable}{Verified Interface Command Tree}
+		\texttt{switchport mode <mode>} &
+		Set the switchport operating mode \\
+
+		\texttt{switchport trunk allowed vlan all} &
+		Allow all VLANs on the trunk \\
+
+		\texttt{switchport trunk allowed vlan \{add|remove\} <vid-list>} &
+		Add or remove VLANs from the trunk allowed list \\
+
+		\texttt{switchport port-security ...} &
+		Configure port security, MAC addresses, sticky learning, limits, and violation action \\
+
+		\texttt{ip address <ip> <mask>} &
+		Configure a static IP address and subnet mask \\
+
+		\texttt{ip address dhcp} &
+		Obtain the interface address through DHCP \\
+
+		\texttt{ip dhcp snooping \{trust|untrust\}} &
+		Set the interface as trusted or untrusted for DHCP Snooping \\
+
+		\texttt{spanning-tree \{edge|auto-edge|bpdu-filter|bpdu-guard\}} &
+		Configure edge mode, BPDU filtering/guard, root guard, or loop guard \\
+
+		\texttt{aggregation group <1-13> \{on|mode active|mode passive\}} &
+		Add the interface to an EtherChannel or LACP aggregation group \\
+
+		\texttt{shutdown} &
+		Administratively disable the interface \\
+
+		\texttt{no shutdown} &
+		Administratively enable the interface \\
+	\end{cmdtable}
+
+	\begin{cmdtable}{Observed Interface Subcommand Syntax}
+		\texttt{speed \{10|100|1000|auto\}} &
+		Set interface speed or auto-negotiation \\
+
+		\texttt{switchport access vlan <vid>} &
+		Assign an access VLAN \\
+
+		\texttt{switchport trunk allowed vlan add|remove <vid-list>} &
+		Add or remove trunk VLANs \\
+
+		\texttt{switchport trunk native vlan <vid>} &
+		Set the native VLAN \\
+
+		\texttt{switchport voice vlan <vid>} &
+		Set the voice VLAN \\
+
+		\texttt{switchport mode private-vlan \{host|promiscuous\}} &
+		Set private-VLAN port mode \\
+
+		\texttt{switchport port-security mac-address sticky} &
+		Enable sticky MAC learning \\
+
+		\texttt{switchport port-security maximum <num>} &
+		Set the maximum learned MAC count \\
+
+		\texttt{switchport port-security violation \{shutdown|protect|restrict\}} &
+		Set the port-security violation action \\
+	\end{cmdtable}
+
+	\begin{cautionbox}{تفاوت نحوی مهم}
+		در آزمون این دستگاه، عبارت‌های \lr{interface gigabitethernet 1}
+		و \lr{interface gigabitethernet1} پذیرفته نشدند، درحالی‌که
+		\lr{interface vlan 1} پذیرفته شد. پیش از استفاده در اسکریپت‌ها،
+		نحو دقیق پورت را با \lr{interface ?} و راهنمای نسخه دستگاه بررسی
+		کنید؛ خروجی \lr{show running-config} رابط‌ها را با نام
+		\lr{Gigabit <number>} ثبت می‌کند.
+	\end{cautionbox}
+
+	\section{قابلیت‌های اعلام‌شده اما تأییدنشده}
+
+	شاخه‌های زیر در فهرست راهنمای حالت \lr{global configuration} مشاهده
+	شدند، اما اجرای عملی آن‌ها در آزمون انجام نشد. جدول‌ها عمداً فقط
+	نحو اعلام‌شده در سطح اول را ثبت می‌کنند؛ برای پارامترهای دقیق‌تر،
+	پس از ورود به محیط آزمایشگاهی از \lr{<command> ?} استفاده کنید.
+
+	\subsection{احراز هویت و کنترل دسترسی}
+
+	\begin{cmdtable}{Unverified Authentication and Access Commands}
+		\texttt{radius-server ?} &
+		Enter the RADIUS server configuration branch \\
+
+		\texttt{tacacs-server ?} &
+		Enter the TACACS+ server configuration branch \\
+
+		\texttt{aaa ?} &
+		Enter the AAA authentication, authorization, and accounting branch \\
+
+		\texttt{dot1x ?} &
+		Enter the IEEE 802.1X access-control configuration branch \\
+
+		\texttt{crypto ?} &
+		Enter the cryptographic tools branch for secure services such as SSH \\
+	\end{cmdtable}
+
+	\begin{cmdtable}{Unverified Access-Related Show Commands}
+		\texttt{show dot1x} &
+		Display 802.1X authentication status for interfaces \\
+
+		\texttt{show access-list} &
+		Display configured access-control lists \\
+
+		\texttt{show port-security} &
+		Display port-security status and learned MAC addresses \\
+	\end{cmdtable}
+
+	\subsection{سیاست کیفیت سرویس و پایش}
+
+	\begin{cmdtable}{Unverified QoS and Monitoring Commands}
+		\texttt{policy-map ?} &
+		Create or enter a policy-map configuration branch for traffic and QoS policies \\
+
+		\texttt{show policy-map} &
+		Display configured policy maps \\
+
+		\texttt{sflow ?} &
+		Enter the sFlow sampling and export configuration branch \\
+
+		\texttt{show sflow} &
+		Display sFlow status and configuration \\
+
+		\texttt{rmon ?} &
+		Enter the RMON statistics and event-management branch \\
+
+		\texttt{show rmon} &
+		Display RMON statistics \\
+	\end{cmdtable}
+
+	\subsection{بایگانی و ابزارهای سیستمی}
+
+	\begin{cmdtable}{Unverified System Utility Commands}
+		\texttt{archive ?} &
+		Enter the configuration-file archive management branch \\
+
+		\texttt{show archive} &
+		Display archived files or configuration revisions \\
+
+		\texttt{logging ?} &
+		Enter the system-message logging configuration branch \\
+
+		\texttt{errdisable ?} &
+		Enter error-disable detection and recovery configuration \\
+	\end{cmdtable}
+
+	\begin{cautionbox}{محدودیت اعتبار}
+		وجود یک کلیدواژه در خروجی \lr{?} به‌تنهایی به معنی فعال‌بودن
+		قابلیت در همه مدل‌ها یا کامل‌بودن پیاده‌سازی آن نیست. پیش از
+		استفاده عملی، ابتدا \lr{<command> ?}، سپس یک پیکربندی آزمایشی
+		قابل بازگشت و در پایان دستور \lr{show} متناظر را اجرا کنید.
+	\end{cautionbox}
+
+	% ============================================================================
+	% فصل: امنیت، QoS و پایش پیشرفته
+	% ============================================================================
+
+	\chapter{امنیت، QoS و پایش پیشرفته}
+
+	این فصل دستورهایی را که در پیمایش حالت پیکربندی مشاهده شدند، در
+	ساختار موضوعی مشابه راهنماهای \lr{Cisco Catalyst 2960} سازمان‌دهی
+	می‌کند. نحو زیر برای نسخه آزموده‌شده \lr{DT7429-8GE-2GF, V01} است؛
+	پیش از اعمال در مدل دیگر، همان شاخه را با \lr{?} بررسی کنید.
+
+	\section{کنترل دسترسی مبتنی بر ACL}
+
+	برای تعریف ACL IPv4، ابتدا یک شناسه بزرگ‌تر از صفر و سپس عمل
+	\lr{permit} یا \lr{deny} را انتخاب کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# access-list <acl-id> permit <ipv4> <mask>
+			dt7429(config)# access-list <acl-id> deny <protocol> <src> <mask> <dst> <mask>
+			dt7429(config)# access-list <acl-id> permit <protocol> <src> <mask> <eth-port>
+		\end{lstlisting}
+	\end{LTR}
+
+	پروتکل‌های اعلام‌شده توسط CLI شامل \lr{udp}، \lr{tcp}، \lr{ipv6}،
+	\lr{icmp}، \lr{igmp}، \lr{ospf}، \lr{pim} و \lr{sctp} هستند. پس از
+	تعریف ACL، با \lr{show access-list} وجود ورودی‌ها را بررسی کنید.
+	نحوه اتصال ACL به رابط در پیمایش این نسخه به‌صورت کامل تأیید نشد؛
+	بنابراین پیش از تولید، شاخه \lr{interface ?} و \lr{ip ?} را بررسی
+	کنید.
+
+	\section{احراز هویت AAA با RADIUS و TACACS+}
+
+	\subsection{تعریف سرورهای احراز هویت}
+
+	\begin{cmdtable}{AAA Server Configuration}
+		\texttt{radius-server host <ipv4> auth-port <port> acct-port <port> key <key>} &
+		Define a RADIUS authentication/accounting server; ports 1--65535 \\
+
+		\texttt{tacacs-server host <ipv4> key <key>} &
+		Define a TACACS+ server; key length is 1--255 characters \\
+	\end{cmdtable}
+
+	\subsection{فعال‌سازی فهرست‌های AAA}
+
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# aaa authentication login default group tacacs+
+			dt7429(config)# aaa authorization default group tacacs+
+			dt7429(config)# aaa accounting exec default start-stop group tacacs+
+		\end{lstlisting}
+	\end{LTR}
+
+	مقادیر اعلام‌شده برای Accounting عبارت‌اند از
+	\lr{start-only}، \lr{stop-only} و \lr{start-stop}. پیش از فعال‌سازی،
+	یک کاربر محلی پشتیبان با \lr{username <name> privilege <1-15>
+	password <pass>} ایجاد کنید تا در صورت قطع سرور AAA امکان ورود
+	اضطراری وجود داشته باشد.
+
+	\section{802.1X و کنترل دسترسی پورت}
+
+	فعال‌سازی سراسری 802.1X با دستور زیر انجام می‌شود:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# dot1x system-auth-control
+		\end{lstlisting}
+	\end{LTR}
+
+	تنظیمات وابسته به رابط، از جمله \lr{Authentication} و
+	\lr{dot1x}، باید پس از ورود به \lr{interface GigabitEthernet
+	<port-id>} با \lr{?} بررسی شوند. وضعیت را در صورت پشتیبانی با
+	\lr{show dot1x} مشاهده کنید.
+
+	\section{سیاست کیفیت سرویس}
+
+	برای تنظیمات پایه QoS، CLI این دو دستور سراسری را اعلام می‌کند:
+
+	\begin{cmdtable}{Global QoS Commands}
+		\texttt{qos trust dscp} &
+		Trust incoming DSCP markings \\
+
+		\texttt{qos dscp <value>} &
+		Set the global DSCP value according to the device's accepted range \\
+
+		\texttt{policy-map <policy-id>} &
+		Enter a policy-map; observed identifier range is 1--16 \\
+	\end{cmdtable}
+
+	برای اتصال Policy به پورت، شاخه \lr{service-policy} در حالت
+	\lr{config-if} مشاهده شد. نحو جزئی آن را با
+	\lr{service-policy ?} استخراج کنید؛ در این آزمون اعمال عملی Policy
+	انجام نشد.
+
+	\section{تشخیص خطا و بازیابی Errdisable}
+
+	\begin{cmdtable}{Errdisable Detection and Recovery}
+		\texttt{errdisable detect cause \{all|udld|loop-guard|bpdu-guard|port-security\}} &
+		Enable detection for the selected cause \\
+
+		\texttt{errdisable recovery cause \{all|udld|loop-guard|bpdu-guard|port-security\}} &
+		Enable automatic recovery for the selected cause \\
+
+		\texttt{errdisable recovery interval <sec>} &
+		Set recovery interval; observed range is 30--86400 seconds \\
+	\end{cmdtable}
+
+	پس از تغییر، وضعیت رابط و علت خطا را با دستورهای \lr{show} مربوط
+	به رابط و \lr{show errdisable} در صورت پشتیبانی بررسی کنید.
+
+	\section{پایش RMON}
+
+	\begin{LTR}
+		\begin{lstlisting}
+			dt7429(config)# rmon event <event-id> description <text> log
+			dt7429(config)# rmon event <event-id> description <text> trap <community>
+			dt7429(config)# rmon alarm <alarm-id> <port> <object> <interval> absolute rising-threshold <value>
+		\end{lstlisting}
+	\end{LTR}
+
+	برای Alarm، بازه \lr{interval} از ۱ تا ۲۱۴۷۴۸۳۶۴۷ ثانیه و شناسه‌ها
+	از ۱ تا ۶۵۵۳۵ اعلام شدند. رویدادها می‌توانند \lr{log}، \lr{trap} یا
+	هر دو را تولید کنند و Community مجاز برای Trap در راهنمای دستگاه
+	\lr{public} یا \lr{private} گزارش شد. وضعیت را با \lr{show rmon}
+	در صورت پشتیبانی بررسی کنید.
+
+	\section{ابزارهای بایگانی و رمزنگاری}
+
+	شاخه‌های \lr{archive} و \lr{crypto} در فهرست پیکربندی مشاهده شدند،
+	اما زیر‌دستور اجرایی آن‌ها در آزمون استخراج نشد. برای جلوگیری از
+	انتساب نحو Cisco به این دستگاه، این قابلیت‌ها را فقط با
+	\lr{archive ?} یا \lr{crypto ?} روی همان نسخه تکمیل کنید.
+
 
 	% ============================================================================
 	% فصل: تنظیم سرعت فن
@@ -2941,21 +3560,32 @@
 	سرعت فن سوییچ DT7429 قابل تنظیم است. این قابلیت برای مدیریت میزان
 	خنک‌سازی، کاهش مصرف انرژی و کنترل صدای ایجادشده توسط فن کاربرد دارد.
 
-	مقدار سرعت فن در بازه \lr{0} تا \lr{255} تنظیم می‌شود:
+	در پیمایش CLI دستگاه در تاریخ \lr{2026-08-24}، دستور
+	\lr{fan ?} در حالت \lr{dt7429(config)\#} این گزینه‌ها را نشان داد:
 
 	\begin{itemize}
-		\item \lr{0}: حداقل سرعت یا خاموش بودن فن
-		\item \lr{255}: حداکثر سرعت فن
+		\item \lr{fan speed auto}: تنظیم خودکار سرعت فن
+		\item \lr{fan speed <0-255>}: تنظیم دستی سرعت در بازه ۰ تا ۲۵۵
+		\item \lr{fan status}: نمایش دما، سرعت و حالت کنترل فن
 	\end{itemize}
 
 	\section{تنظیم سرعت فن}
 
-	برای تنظیم سرعت فن، در حالت پیکربندی سراسری از دستور زیر استفاده کنید:
+	برای تنظیم دستی سرعت فن، در حالت پیکربندی سراسری از دستور زیر
+	استفاده کنید:
 
 	\begin{latin}
 		\begin{lstlisting}[language=bash]
 		DT7429(config)\# fan speed <0-255>
 	\end{lstlisting}
+	\end{latin}
+
+	برای بازگرداندن کنترل فن به تنظیم خودکار:
+
+	\begin{latin}
+		\begin{lstlisting}[language=bash]
+		DT7429(config)\# fan speed auto
+		\end{lstlisting}
 	\end{latin}
 
 	برای نمونه، تنظیم سرعت فن روی مقدار \lr{128}:
@@ -2977,14 +3607,162 @@
 	\begin{cmdtable}{Fan Speed Command}
 		\texttt{DT7429(config)\# fan speed \textit{\textless 0-255\textgreater}} &
 		Configure the fan speed level
+		\\
+		\texttt{DT7429(config)\# fan speed auto} &
+		Return fan control to automatic tuning
+		\\
+		\texttt{DT7429(config)\# fan status} &
+		Display temperature, speed, and fan-control mode
 	\end{cmdtable}
+
+	\subsection{نمونه خروجی وضعیت}
+
+	در آزمون میدانی، اجرای \lr{fan status} خروجی زیر را گزارش کرد:
+
+	\begin{latin}
+		\begin{lstlisting}[language=bash]
+		tempreture  38 °C
+		speed       200
+		fan control manual
+		\end{lstlisting}
+	\end{latin}
+
+	عبارت \lr{tempreture} دقیقاً با همین املاء توسط نرم‌افزار دستگاه
+	نمایش داده شد. مقدارهای سرعت و دما نمونه‌ای از وضعیت لحظه‌ای دستگاه
+	هستند و ممکن است در شرایط کاری دیگر تغییر کنند.
 
 	\begin{cautionbox}{هشدار}
 		تنظیم سرعت فن روی مقدار بسیار پایین، به‌ویژه در محیط‌های گرم، رک‌های
 		بسته یا هنگام بار ترافیکی بالا، ممکن است باعث افزایش دمای دستگاه شود.
-		برای حفظ پایداری و طول عمر تجهیزات، سرعت فن را متناسب با دمای محیط
-		تنظیم کنید.
+		در صورت تردید، از \lr{fan speed auto} استفاده کنید و پس از هر
+		تغییر، \lr{fan status} را برای کنترل دما و حالت فن بررسی کنید.
 	\end{cautionbox}
+
+	% ============================================================================
+	% پیوست: به‌روزرسانی نرم‌افزار از طریق U-Boot و TFTP
+	% ============================================================================
+
+	\appendix
+	\chapter{به‌روزرسانی نرم‌افزار از طریق U-Boot و TFTP}
+
+	این پیوست بر اساس فایل \lr{update\_software.odt} تهیه شده است و
+	مراحل به‌روزرسانی Firmware سوییچ را از طریق کنسول، شبکه مستقیم و
+	سرور \lr{TFTP} توضیح می‌دهد. نام تصویر استفاده‌شده در سند منبع
+	\lr{mipsel\_vsc7429.mfi} است؛ پیش از اجرا، سازگاری آن با مدل و
+	نسخه سخت‌افزار را از منبع رسمی تأیید کنید.
+
+	\begin{cautionbox}{هشدارهای ضروری پیش از شروع}
+		\begin{itemize}
+			\item از \lr{show running-config} خروجی بگیرید و تنظیمات فعلی را
+			در محلی خارج از سوییچ ذخیره کنید.
+			\item تصویر Firmware را از نظر نام، مدل، نسخه و صحت انتقال بررسی
+			کنید؛ تصویر اشتباه می‌تواند سوییچ را غیرقابل‌راه‌اندازی کند.
+			\item در زمان پاک‌کردن یا نوشتن Flash، برق سوییچ، کابل کنسول و
+			ارتباط شبکه را قطع نکنید.
+			\item این کار را در پنجره تعمیراتی انجام دهید؛ پس از \lr{reset}
+			ارتباط شبکه قطع خواهد شد.
+		\end{itemize}
+	\end{cautionbox}
+
+	\section{اتصال کنسول}
+
+	یک کابل کنسول \lr{RJ45-to-USB} یا \lr{RJ45-to-RS232} را به پورت
+	کنسول سوییچ وصل کنید. در رایانه، نرم‌افزار ترمینال مانند
+	\lr{PuTTY}، \lr{Tera Term} یا \lr{picocom} را با تنظیمات زیر اجرا
+	کنید:
+
+	\begin{cmdtable}{Serial Console Parameters}
+		\texttt{Baud Rate} & \texttt{115200} \\
+		\texttt{Data bits} & \texttt{8} \\
+		\texttt{Parity} & \texttt{None} \\
+		\texttt{Stop bits} & \texttt{1} \\
+		\texttt{Flow control} & \texttt{None}
+	\end{cmdtable}
+
+	\section{اتصال شبکه مستقیم به رایانه}
+
+	یک کابل شبکه را بین پورت Ethernet سوییچ و کارت شبکه رایانه وصل
+	کنید. برای این فرایند، اتصال مستقیم و یک شبکه مدیریتی موقت کافی
+	است؛ از وجود لینک فیزیکی در هر دو طرف اطمینان حاصل کنید.
+
+	\section{تنظیم آدرس IP رایانه}
+
+	در کارت شبکه رایانه، آدرس \lr{192.168.1.50} را تنظیم کنید. ماسک
+	زیرشبکه را مطابق شبکه آزمایش انتخاب کنید (برای شبکه مستقیم معمولاً
+	\lr{255.255.255.0}). در این مرحله Gateway برای ارتباط محلی لازم
+	نیست و بهتر است رایانه از شبکه‌های دیگر جدا باشد.
+
+	\section{راه‌اندازی سرور TFTP}
+
+	یکی از سرورهای زیر را نصب و اجرا کنید:
+
+	\begin{itemize}
+		\item ویندوز: \lr{Tftpd32/Tftpd64} یا \lr{SolarWinds TFTP Server}
+		\item لینوکس: \lr{tftp-hpa} یا \lr{atftpd}
+	\end{itemize}
+
+	فایل \lr{mipsel\_vsc7429.mfi} را در پوشه ریشه (Root) سرور TFTP
+	قرار دهید. Firewall و آنتی‌ویروس رایانه نباید ترافیک \lr{UDP/69}
+	را مسدود کنند. دسترسی سرور را فقط روی رابط شبکه مورد استفاده برای
+	به‌روزرسانی فعال کنید.
+
+	\section{آزمون ارتباط از محیط U-Boot}
+
+	در زمان راه‌اندازی، با کلیدهای کنسول وارد محیط \lr{U-Boot} شوید.
+	سپس ارتباط با رایانه دارای TFTP را آزمایش کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			ping 192.168.1.50
+		\end{lstlisting}
+	\end{LTR}
+
+	پاسخ موفق \lr{ping} نشان می‌دهد که مسیر شبکه تا رایانه برقرار است؛
+	اما به‌تنهایی صحت نام فایل یا دسترسی TFTP را تضمین نمی‌کند. در صورت
+	خطا، آدرس IP، لینک، Firewall، پوشه ریشه و تنظیمات متغیرهای شبکه
+	در U-Boot را بررسی کنید.
+
+	\section{دریافت و نوشتن Firmware}
+
+	پس از موفقیت آزمون ارتباط و اطمینان از انتخاب تصویر صحیح، دستورهای
+	زیر را در U-Boot اجرا کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			run get_os
+			run update_os
+		\end{lstlisting}
+	\end{LTR}
+
+	دستور \lr{run get\_os} تصویر را از TFTP دریافت می‌کند و
+	\lr{run update\_os} آن را در حافظه Flash می‌نویسد. پیام‌های کنسول
+	را تا پایان عملیات ثبت کنید و تا اتمام نوشتن Flash هیچ کلیدی برای
+	راه‌اندازی مجدد یا قطع عملیات نزنید.
+
+	\section{راه‌اندازی مجدد و بررسی}
+
+	پس از پایان موفق عملیات، سوییچ را راه‌اندازی مجدد کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			reset
+		\end{lstlisting}
+	\end{LTR}
+
+	پس از بوت، نسخه و سلامت سیستم را با دستورهای زیر بررسی کنید:
+
+	\begin{LTR}
+		\begin{lstlisting}
+			show version
+			show running-config
+			show interface status
+		\end{lstlisting}
+	\end{LTR}
+
+	در صورت ازبین‌رفتن تنظیمات، نسخه پشتیبان ذخیره‌شده را با دقت و
+	مرحله‌به‌مرحله بازگردانید. اگر سوییچ وارد U-Boot نشد یا عملیات
+	Flash ناقص ماند، از خاموش/روشن‌کردن‌های مکرر خودداری کنید و فرایند
+	بازیابی مدل مربوطه را از سازنده دریافت کنید.
 
 
 \end{document}
