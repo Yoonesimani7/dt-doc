@@ -140,6 +140,28 @@
 }
 
 % ---------------------------------------------------------------------------
+% Cisco-style CLI examples using verbatim text inside a light highlighted box
+% ---------------------------------------------------------------------------
+\newtcolorbox{cliexample}[1]{
+	breakable,
+	 enhanced,
+	colback=ciscolightgray,
+	colframe=ciscoblue,
+	boxrule=0.7pt,
+	arc=1pt,
+	left=8pt,
+	right=8pt,
+	top=8pt,
+	bottom=8pt,
+	title={\textbf{\lr{#1}}},
+	fonttitle=\sffamily\small,
+	colbacktitle=ciscoblue,
+	coltitle=white,
+	attach boxed title to top left={yshift=-2mm, xshift=6mm},
+	boxed title style={sharp corners, boxrule=0pt}
+}
+
+% ---------------------------------------------------------------------------
 % Callout boxes: Note / Caution / Tip
 % ---------------------------------------------------------------------------
 \newtcolorbox{noticebox}[2][]{
@@ -406,12 +428,14 @@
 	\section{نحو دستورها و روش بررسی تنظیمات}
 	راهنمای درون‌خطی با علامت سؤال فعال می‌شود؛ برای نمونه:
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			dt7429# show ?
 			dt7429# show ip ?
 			dt7429(config)# spanning-tree ?
 			dt7429(config-if)# switchport ?
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 	در صورت نمایش پیام \lr{-- More --}، کلید \lr{Enter} صفحه بعد و
 	کلید \lr{q} خروج از نمایش صفحه‌بندی‌شده را انجام می‌دهد. برای
@@ -445,10 +469,12 @@
 	\subsection{تنظیم SNMP}
 	برای تعریف یک Community، از دستور زیر استفاده کنید:
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			dt7429(config)# snmp-server community <name> RO
 			dt7429(config)# snmp-server community <name> RW
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 	سطح \lr{RO} برای پایش فقط‌خواندنی و سطح \lr{RW} برای دسترسی
 	خواندن/نوشتن است. Community را مانند گذرواژه در نظر بگیرید و از
@@ -459,12 +485,14 @@
 	برای تعیین میزبان مدیر SNMP و فعال‌کردن Trapهای مشاهده‌شده، از
 	دستورهای زیر استفاده کنید:
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			dt7429(config)# snmp-server host <ipv4>
 			dt7429(config)# snmp-server enable traps vlan-membership
 			dt7429(config)# snmp-server enable traps vlancreate
 			dt7429(config)# snmp-server enable traps vlandelete
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 	این سه Trap مربوط به تغییرات عضویت و ایجاد/حذف VLAN هستند و در
 	نسخه آزموده‌شده در راهنمای \lr{snmp-server ?} نمایش داده شدند.
@@ -481,10 +509,12 @@
 	برای ارسال پیام‌های سیستمی به یک سرور مرکزی، ابتدا سطح شدت پیام و
 	سپس میزبان Syslog را تنظیم کنید:
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			dt7429(config)# logging trap <level>
 			dt7429(config)# logging host <server-ip>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 	مقدار \lr{<level>} را با اجرای \lr{logging trap ?} از فهرست مجاز
 	انتخاب کنید؛ سطح‌های شدیدتر پیام‌های کمتری تولید می‌کنند و سطح‌های
@@ -587,9 +617,11 @@
 		\lr{VLAN}ها، دستور \lr{privileged EXEC} زیر را اجرا کنید:
 
 		\begin{LTR}
-			\begin{lstlisting}
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# show interface (interface-id) switchport
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{LTR}
 	\end{notebox}
 
@@ -600,11 +632,13 @@
 	مجاز می‌کند:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface gigabitethernet2
 			DT7429(config-if)# switchport mode trunk
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	% ============================================================================
@@ -670,10 +704,12 @@
 		برای مثال، جهت ایجاد \lr{VLAN 10}:
 
 		\begin{LTR}
-			\begin{lstlisting}
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# configure terminal
 				DT7429(config)# vlan 10
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{LTR}
 
 		\item \textbf{ورود به اینترفیس \lr{trunk} موردنظر.}
@@ -681,11 +717,13 @@
 		بنابراین ابتدا باید پورت در حالت \lr{trunk} پیکربندی شود:
 
 		\begin{LTR}
-			\begin{lstlisting}
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# configure terminal
 				DT7429(config)# interface gigabitethernet 10
 				DT7429(config-if)# switchport mode trunk
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{LTR}
 
 		\item \textbf{تغییر \lr{native VLAN}.}
@@ -693,10 +731,12 @@
 		\lr{VLAN 10} تغییر می‌دهد:
 
 		\begin{LTR}
-			\begin{lstlisting}
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config-if)# switchport trunk native vlan 10
 				DT7429(config-if)# exit
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{LTR}
 
 	\end{enumerate}
@@ -739,10 +779,12 @@
 	\lr{\texttt{GigabitEthernet2}} اختصاص می‌دهد:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface gigabitethernet2
 			DT7429(config-if)# switchport voice vlan 2
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	% ============================================================================
@@ -789,7 +831,8 @@
 	\lr{\texttt{GigabitEthernet3--4}} پیکربندی می‌شود:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# configure terminal
 			DT7429(config)# vlan 200
 			DT7429(config-vlan)# private-vlan isolated
@@ -804,7 +847,8 @@
 			DT7429(config)# interface range GigabitEthernet 3-4
 			DT7429(config-if-range)# switchport private-vlan host-association 300
 			DT7429(config-if-range)# end
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	\subsection{\lr{Verification}}
@@ -812,7 +856,8 @@
 	برای بررسی پیکربندی \lr{Private VLAN}، دستور زیر را اجرا کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command / Response}
+			\begin{verbatim}
 			DT7429# show vlan private-vlan
 
 			VLAN   PVLAN_NO   community_ports
@@ -822,7 +867,8 @@
 			VID    isolated_ports
 			----   --------------
 			200    1,2
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	\section{پیکربندی گروهی با \lr{Interface Range}}
@@ -831,19 +877,23 @@
 	\lr{config-if-range} استفاده کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface range GigabitEthernet 1-9
 			DT7429(config-if-range)# switchport mode access
 			DT7429(config-if-range)# switchport access vlan 10
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	برای انتخاب پورت‌های غیرپیوسته، شناسه‌ها را با ویرگول جدا کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface range GigabitEthernet 1,3,5
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	پیش از اعمال تنظیم، وجود همه پورت‌ها و سازگاری حالت فعلی آن‌ها را
@@ -884,10 +934,12 @@
 	و پس از اطمینان از نبود مسیر حلقه‌ای مجاز است.
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# spanning-tree enable
 			DT7429(config)# no spanning-tree enable
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Global Spanning Tree Configuration Commands}
@@ -950,11 +1002,13 @@
 	برای تغییر حالت کاری STP، از دستورات زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# spanning-tree mode stp
 			DT7429(config)# spanning-tree mode rstp
 			DT7429(config)# spanning-tree mode mstp
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{پیشنهاد پیکربندی}
@@ -1030,10 +1084,12 @@
 	نمونهٔ زیر، یک پورت را به‌عنوان \lr{Edge Port} تنظیم می‌کند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree edge
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در صورتی که نوع تجهیز متصل به پورت مشخص نباشد، می‌توان از
@@ -1041,10 +1097,12 @@
 	\lr{BPDU}، دربارهٔ Edge یا Non-edge بودن پورت تصمیم‌گیری می‌کند.
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree auto-edge
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -1091,12 +1149,14 @@
 	برای تنظیم این قابلیت‌ها، ابتدا وارد پیکربندی پورت شوید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree edge
 			DT7429(config-if)# spanning-tree bpdu-guard enable
 			DT7429(config-if)# spanning-tree bpdu-filter enable
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{تفاوت BPDU Guard و BPDU Filter}
@@ -1134,11 +1194,13 @@
 	نمونهٔ پیکربندی \lr{Loop Guard} به‌صورت زیر است:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# spanning-tree auto-edge
 			DT7429(config-if)# spanning-tree guard loop
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{نکته عملیاتی}
@@ -1175,12 +1237,14 @@
 	نمونهٔ فعال‌سازی \lr{UDLD} روی یک پورت:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# udld port
 			DT7429(config-if)# exit
 			DT7429(config)# do show interface status
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -1231,7 +1295,8 @@
 	\lr{MST Instance} مختلف نگاشت می‌کند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# spanning-tree enable
 			DT7429(config)# spanning-tree mode mstp
 			DT7429(config)# spanning-tree mst configuration
@@ -1243,7 +1308,8 @@
 			DT7429(config)# spanning-tree mst configuration
 			DT7429(config-mst)# priority instance 1 set 8192
 			DT7429(config-mst)# exit
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{نکته هماهنگی MST Region}
@@ -1276,9 +1342,11 @@
 	نمونهٔ دستور بررسی وضعیت کلی STP:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show spanning-tree
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	هنگام بررسی خروجی، موارد زیر را کنترل کنید:
@@ -1348,9 +1416,11 @@
 	برای مشاهده وضعیت Session مانیتورینگ، از دستور زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show monitor session
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{SPAN and RSPAN Verification Command}
@@ -1390,23 +1460,27 @@
 	به‌عنوان پورت مقصد تنظیم شده است:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# monitor session source interface ethernet 2
 			DT7429(config)# monitor session destination interface ethernet 8
 			DT7429# show monitor session
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			Session
 			-----------------
 			status              :    enable
 			Source ports        :    2
 			Destination port    :    8
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در این خروجی، فعال‌بودن Session، پورت مبدأ و پورت مقصد نمایش داده
@@ -1427,7 +1501,8 @@
 	VLAN شماره 901 برای انتقال ترافیک مانیتور‌شده استفاده می‌شود:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# monitor session source interface ethernet 2
 
 			DT7429(config)# interface GigabitEthernet 1
@@ -1435,50 +1510,59 @@
 			DT7429(config-if)# switchport
 			DT7429(config-if)# switchport trunk allowed vlan add 901
 			DT7429(config-if)# do show vlan
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی بررسی VLAN:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			VID   Name              Access_ports       Trunk_ports
 			----  ----------------  -----------------  -----------
 			1     default           1-26               1
 			901   vlan00901         1                  1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از اطمینان از عبور VLAN شماره 901 روی لینک Trunk، پورت یا
 	سوییچ مقصد را به RSPAN VLAN مربوط می‌کنیم:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# exit
 			DT7429(config)# monitor session destination remote vlan 901
 			DT7429(config)# do show vlan
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در پایان، وضعیت Session را بررسی کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show monitor session
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			Session
 			-----------------
 			status              :    enable
 			Source ports        :    2
 			Destination port    :    1
 			RSPAN VLAN           :    901
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{ملاحظات RSPAN}
@@ -1517,9 +1601,11 @@
 	استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show ip igmp snooping groups
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{IGMP Snooping Group Verification}
@@ -1530,11 +1616,13 @@
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			VLAN      GROUPS                IGMP      PORTS
 			--------  -------------------  --------  ---------
 			1         235.255.1.1          3         1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در این خروجی، گروه Multicast با آدرس `235.255.1.1` روی VLAN شماره
@@ -1548,9 +1636,11 @@
 	استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show ip igmp snooping querier
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{IGMP Querier Verification}
@@ -1561,11 +1651,13 @@
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			VLAN      IP                 IGMP      PORT
 			--------  -----------------  --------  ----
 			1         192.168.1.10       3         1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در این نمونه، آدرس IP مربوط به IGMP Querier برابر با
@@ -1622,19 +1714,23 @@
 	`192.168.57.9` و شماره پورت آن `6343` است:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# configure terminal
 			DT7429(config)# sflow collector 192.168.57.9 6343
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از اجرای دستور، نمونه پیام سیستم به‌صورت زیر نمایش داده می‌شود:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			sys: /mnt/sflsp -d vtss.vlan.1 -C 192.168.57.9 -c 6343 -s 20 &
 			sflow agent started
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمایش پیام \lr{sflow agent started} نشان می‌دهد که Agent مربوط
@@ -1646,9 +1742,11 @@
 	برای مشاهده وضعیت و تنظیمات sFlow، دستور زیر را اجرا کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show sflow
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{sFlow Verification Command}
@@ -1745,9 +1843,11 @@
 	لایه ممتاز استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show mac address-table
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{MAC Address Table Verification}
@@ -1788,9 +1888,11 @@
 	می‌کند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# clear mac address-table dynamic address 0008.0070.0007
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -1831,17 +1933,21 @@
 	برای تنظیم زمان Aging روی 200 ثانیه:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# mac address-table aging-time 200
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای مشاهده تنظیمات:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show mac address-table aging-time
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{نکته مدیریتی}
@@ -1886,17 +1992,21 @@
 	GigabitEthernet 1 ثبت می‌کند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# mac address-table static c2f3.220a.12f4 vlan 4 interface GigabitEthernet 1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای مشاهده آدرس‌های Static:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show mac address-table static
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -1930,9 +2040,11 @@
 	برای تنظیم Duplex، ابتدا وارد پیکربندی پورت شوید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Duplex Configuration Commands}
@@ -1958,19 +2070,23 @@
 	برای تنظیم پورت GE1 در حالت Full-Duplex:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# duplex full
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای بازگرداندن پورت به حالت خودکار:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# duplex auto
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2005,10 +2121,12 @@
 	نمونه تنظیم پورت GE1 روی سرعت 100 Mbps:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# speed 100
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{پیشنهاد تنظیماتی}
@@ -2029,9 +2147,11 @@
 		برای مشاهده وضعیت کلی پورت‌ها می‌توان از دستور زیر استفاده کرد:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# show interface status
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		این دستور معمولاً اطلاعاتی مانند وضعیت Link، سرعت، Duplex و حالت
@@ -2057,9 +2177,11 @@
 		برای انتخاب پورت‌های 1 تا 9:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config)# interface range GigabitEthernet 1-9
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		پس از اجرای دستور، خط فرمان وارد حالت
@@ -2069,19 +2191,23 @@
 		اختصاص VLAN شماره 10 به آن‌ها به شکل زیر است:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config-if-range)# switchport mode access
 				DT7429(config-if-range)# switchport access vlan 10
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		برای حذف این تنظیمات:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config-if-range)# no switchport mode access
 				DT7429(config-if-range)# no switchport access vlan 10
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		\section{انتخاب چند پورت غیرپیوسته}
@@ -2090,17 +2216,21 @@
 		از یکدیگر جدا کنید:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config)# interface range GigabitEthernet 1,3
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		برای انتخاب بازه GE1 تا GE2:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429(config)# interface range GigabitEthernet 1-2
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		\begin{cautionbox}{نکات استفاده از Interface Range}
@@ -2143,9 +2273,11 @@
 		استفاده کنید:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# show interface GigabitEthernet <port-list> transceiver
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		\begin{cmdtable}{SFP Monitoring Commands}
@@ -2157,19 +2289,23 @@
 		نمونه دستور:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# show interface GigabitEthernet 26 transceiver
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		نمونه خروجی:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Response}
+				\begin{verbatim}
 				Port  SFP-type     Vendor          Rev   SN            Los  API-IF  Speed  Link
 				----  -----------  --------------  ----  ------------  ---  ------  -----  ----
 				26    1000BASE_SX  CISCO-FINISAR   11.0  AGM11291F9S   no   SERDES  1G     yes
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		در بررسی خروجی، موارد زیر اهمیت دارند:
@@ -2220,42 +2356,50 @@
 		برای آغاز آزمایش کابل متصل به یک پورت، از دستور زیر استفاده کنید:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command}
+				\begin{verbatim}
 				DT7429# diagnostic start cable <port-no>
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		نمونه اجرای آزمایش روی پورت شماره 2:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Command / Response}
+				\begin{verbatim}
 				DT7429# diagnostic start cable 2
 				diagnostic start...
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		نمونه خروجی بررسی وضعیت زوج‌ها:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Response}
+				\begin{verbatim}
 				Link: Up
 
 				Cable diagnostic pair result on port 2:
 				Pair-A   Pair-B   Pair-C   Pair-D
 				-------  -------  -------  -------
 				ok       ok       abnorm   short
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		نمونه خروجی طول تقریبی کابل:
 
 		\begin{latin}
-			\begin{lstlisting}[language=bash]
+			\begin{cliexample}{Response}
+				\begin{verbatim}
 				Cable length (meters) on port 2:
 				Pair-A   Pair-B   Pair-C   Pair-D
 				-------  -------  -------  -------
 				3        3        3        3
-			\end{lstlisting}
+				\end{verbatim}
+			\end{cliexample}
 		\end{latin}
 
 		در این نمونه، زوج‌های A و B سالم هستند، زوج C وضعیت غیرعادی
@@ -2311,32 +2455,40 @@
 		شوید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# switchport mode access
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			برای اختصاص VLAN مشخص به پورت:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# switchport access vlan <vlan-id>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			نمونه اختصاص VLAN شماره 10:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# switchport access vlan 10
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			برای حذف تنظیمات Access:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# no switchport mode access
 			DT7429(config-if)# no switchport access vlan 10
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2344,32 +2496,40 @@
 			برای تنظیم یک پورت در حالت Trunk:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 1
 			DT7429(config-if)# switchport mode trunk
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			در سوییچ DT7429، پس از فعال‌کردن حالت Trunk، وضعیت
 		\lr{Allow All} به‌صورت خودکار فعال نیست. بنابراین VLANهای موردنظر		باید به‌صورت صریح به فهرست VLANهای مجاز اضافه شوند.
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			برای تعریف فهرست VLANهای مجاز:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# switchport trunk allowed vlan <vlan-list>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			برای غیرفعال‌کردن حالت Trunk:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# no switchport mode trunk
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2378,11 +2538,13 @@
 		1، 2، 5 و 6 به‌عنوان VLANهای مجاز روی آن تنظیم شده‌اند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface GigabitEthernet 2
 			DT7429(config-if)# switchport mode trunk
 			DT7429(config-if)# switchport trunk allowed vlan add 1,2,5,6
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2390,24 +2552,30 @@
 			برای مشاهده تنظیمات عملیاتی یک پورت، از دستور زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show interface <interface-id> switchport
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			نمونه:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show interface GigabitEthernet 2 switchport
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 			همچنین برای بررسی فهرست VLANها و پورت‌های Trunk می‌توان از
 		دستور زیر استفاده کرد:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show vlan
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{نکته مهم درباره Trunk}			پیش از تغییر حالت یک پورت از Access به Trunk یا برعکس، VLANهای
@@ -2443,9 +2611,11 @@
 	برای ورود به رابط VLAN1، از دستور زیر در حالت پیکربندی استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface vlan1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از ورود به این بخش، خط فرمان به حالت
@@ -2457,9 +2627,11 @@
 	برای اختصاص آدرس IP مدیریتی و Subnet Mask به VLAN1:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# ip address 172.16.10.2 255.255.255.0
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	این تنظیم باعث می‌شود سوییچ از طریق شبکه با آدرس
@@ -2476,9 +2648,11 @@
 	برای حذف IP تنظیم‌شده:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# no ip address
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{نکته}
@@ -2494,9 +2668,11 @@
 	داشته باشد، باید Gateway پیش‌فرض تنظیم شود:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# ip default-gateway 172.16.10.1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Default Gateway Configuration Commands}
@@ -2510,9 +2686,11 @@
 	برای حذف Gateway تنظیم‌شده:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# no ip default-gateway
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -2528,9 +2706,11 @@
 	و بازگشت به حالت سراسری از دستور زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if)# exit
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2539,17 +2719,21 @@
 	برای مشاهده خلاصه وضعیت IP همه Interfaceها:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show ip interface brief
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای مشاهده اطلاعات IP یک VLAN مشخص:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show ip interface vlan <vlan>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{روش بررسی}
@@ -2581,9 +2765,11 @@
 	برای حذف یک گروه تجمیع:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# no aggregation group <group-id>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Global Aggregation Commands}
@@ -2618,18 +2804,22 @@
 	برای فعال‌سازی هم‌زمان چند روش هش می‌توان از ترکیب زیر استفاده کرد:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# aggregation mode smac dmac ip port
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای مشاهده حالت فعلی تجمیع:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show aggregation mode
 			DT7429# show aggregation
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2638,34 +2828,42 @@
 	ابتدا وارد بازه پورت‌های مورد نظر شوید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface range GigabitEthernet 1-2
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	سپس پورت‌ها را به گروه شماره 1 اضافه کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if-range)# aggregation group 1
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای فعال‌سازی گروه:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if-range)# aggregation group 1 on
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	همچنین می‌توان مد کاری گروه را به‌صورت زیر تعیین کرد:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if-range)# aggregation group <aggr_no> mode active
 			DT7429(config-if-range)# aggregation group <aggr_no> mode passive
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Interface Aggregation Commands}
@@ -2688,18 +2886,21 @@
 	در مثال زیر، پورت‌های GE1 و GE2 در گروه 1 تجمیع شده‌اند:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config)# interface range GigabitEthernet 1-2
 			DT7429(config-if-range)# aggregation group 1
 			DT7429(config-if-range)# aggregation group 1 on
 			DT7429(config-if-range)# do show aggregation
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
@@ -2712,23 +2913,27 @@
 			Aggr_no   LACP_Type  LACP_Ports
 			--------  ---------  ------------------------------
 			1         on         Ge1(P),Ge2(P),
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	اگر گروه به حالت \lr{passive} تنظیم شود:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if-range)# no aggregation group
 			DT7429(config-if-range)# aggregation group 1 mode passive
 			DT7429(config-if-range)# do show aggregation
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
@@ -2741,22 +2946,26 @@
 			Aggr_no   LACP_Type  LACP_Ports
 			--------  ---------  ------------------------------
 			1         passive    Ge1(P),Ge2(P),
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	و در حالت \lr{active}:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429(config-if-range)# aggregation group 1 mode active
 			DT7429(config-if-range)# do show aggregation
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	نمونه خروجی:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Response}
+			\begin{verbatim}
 			Aggr_no   Ports
 			--------  -------------
 			1         1,2
@@ -2769,7 +2978,8 @@
 			Aggr_no   LACP_Type  LACP_Ports
 			--------  ---------  ------------------------------
 			1         active     Ge1(P),Ge2(P),
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -2779,10 +2989,12 @@
 	زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			DT7429# show aggregation mode
 			DT7429# show aggregation
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{tipbox}{نکته مدیریتی}
@@ -2815,9 +3027,11 @@
 	برای معرفی سرور NTP، در حالت پیکربندی سراسری از دستور زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# ntp server 192.168.0.3
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در این مثال، آدرس \lr{192.168.0.3} به‌عنوان سرور زمان برای سوییچ
@@ -2841,9 +3055,11 @@
 	کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# show clock
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از تنظیم NTP و برقراری ارتباط با سرور زمان، ساعت نمایش‌داده‌شده
@@ -2856,9 +3072,11 @@
 	وارد کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# no ntp
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -2923,9 +3141,11 @@
 	برای ساخت یک Pool، ابتدا نامی برای آن تعیین کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# ip dhcp pool aa
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از ورود به حالت \lr{dhcp-config}، می‌توان پارامترهای Pool را
@@ -2966,7 +3186,8 @@
 	یک DHCP Pool با نام \lr{test} ساخته می‌شود.
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# configure terminal
 
 		DT7429(config)\# interface vlan 1
@@ -2982,7 +3203,8 @@
 		DT7429(dhcp-config)\# exit
 
 		DT7429(config)\# service dhcp
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	در این مثال، DHCP Server می‌تواند IPهای بازه
@@ -3000,26 +3222,32 @@
 	کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# show ip binding
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای مشاهده Poolهای DHCP تعریف‌شده روی سوییچ:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# show ip pool
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	پس از تکمیل تنظیمات، برای ذخیره پیکربندی جاری در Startup Configuration
 	از دستور زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# copy running-config startup-config
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -3029,17 +3257,21 @@
 	زیر استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# no ip dhcp pool Floor1DHCP
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای غیرفعال‌سازی کامل سرویس DHCP نیز دستور زیر را وارد کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# no service dhcp
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 
@@ -3052,27 +3284,33 @@
 	ابتدا وارد حالت پیکربندی VLAN مورد نظر شوید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429\# configure terminal
 		DT7429(config)\# interface vlan 1
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای فعال کردن دریافت خودکار IP از DHCP Server:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config-if)\# ip address dhcp
 		DT7429(config-if)\# no shutdown
-	\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای غیرفعال کردن دریافت IP از DHCP Server:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
-		DT7429(config-if)\# no ip address dhcp
-	\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+					DT7429(config-if)\# no ip address dhcp
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cautionbox}{هشدار}
@@ -3432,11 +3670,13 @@
 	\lr{permit} یا \lr{deny} را انتخاب کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
-			dt7429(config)# access-list <acl-id> permit <ipv4> <mask>
-			dt7429(config)# access-list <acl-id> deny <protocol> <src> <mask> <dst> <mask>
-			dt7429(config)# access-list <acl-id> permit <protocol> <src> <mask> <eth-port>
-		\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+						dt7429(config)# access-list <acl-id> permit <ipv4> <mask>
+						dt7429(config)# access-list <acl-id> deny <protocol> <src> <mask> <dst> <mask>
+						dt7429(config)# access-list <acl-id> permit <protocol> <src> <mask> <eth-port>
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	پروتکل‌های اعلام‌شده توسط CLI شامل \lr{udp}، \lr{tcp}، \lr{ipv6}،
@@ -3461,11 +3701,13 @@
 	\subsection{فعال‌سازی فهرست‌های AAA}
 
 	\begin{LTR}
-		\begin{lstlisting}
-			dt7429(config)# aaa authentication login default group tacacs+
-			dt7429(config)# aaa authorization default group tacacs+
-			dt7429(config)# aaa accounting exec default start-stop group tacacs+
-		\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+						dt7429(config)# aaa authentication login default group tacacs+
+						dt7429(config)# aaa authorization default group tacacs+
+						dt7429(config)# aaa accounting exec default start-stop group tacacs+
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	مقادیر اعلام‌شده برای Accounting عبارت‌اند از
@@ -3479,9 +3721,11 @@
 	فعال‌سازی سراسری 802.1X با دستور زیر انجام می‌شود:
 
 	\begin{LTR}
-		\begin{lstlisting}
-			dt7429(config)# dot1x system-auth-control
-		\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+						dt7429(config)# dot1x system-auth-control
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	تنظیمات وابسته به رابط، از جمله \lr{Authentication} و
@@ -3528,11 +3772,13 @@
 	\section{پایش RMON}
 
 	\begin{LTR}
-		\begin{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 			dt7429(config)# rmon event <event-id> description <text> log
 			dt7429(config)# rmon event <event-id> description <text> trap <community>
 			dt7429(config)# rmon alarm <alarm-id> <port> <object> <interval> absolute rising-threshold <value>
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	برای Alarm، بازه \lr{interval} از ۱ تا ۲۱۴۷۴۸۳۶۴۷ ثانیه و شناسه‌ها
@@ -3575,33 +3821,41 @@
 	استفاده کنید:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
-		DT7429(config)\# fan speed <0-255>
-	\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+					DT7429(config)\# fan speed <0-255>
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای بازگرداندن کنترل فن به تنظیم خودکار:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# fan speed auto
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	برای نمونه، تنظیم سرعت فن روی مقدار \lr{128}:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
+		\begin{cliexample}{Command}
+			\begin{verbatim}
 		DT7429(config)\# fan speed 128
-		\end{lstlisting}
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	و برای تنظیم فن روی بیشترین سرعت:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
-		DT7429(config)\# fan speed 255
-	\end{lstlisting}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+					DT7429(config)\# fan speed 255
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	\begin{cmdtable}{Fan Speed Command}
@@ -3620,11 +3874,13 @@
 	در آزمون میدانی، اجرای \lr{fan status} خروجی زیر را گزارش کرد:
 
 	\begin{latin}
-		\begin{lstlisting}[language=bash]
-		tempreture  38 °C
-		speed       200
-		fan control manual
-		\end{lstlisting}
+		\begin{cliexample}{Response}
+			\begin{verbatim}
+					tempreture  38 °C
+					speed       200
+					fan control manual
+			\end{verbatim}
+		\end{cliexample}
 	\end{latin}
 
 	عبارت \lr{tempreture} دقیقاً با همین املاء توسط نرم‌افزار دستگاه
@@ -3721,11 +3977,13 @@
 	\end{enumerate}
 
 
-	\begin{LTR}
-		\begin{verbatim}
-			Luton # ping 192.168.1.50
-		\end{verbatim}
-	\end{LTR}
+		\begin{latin}
+			\begin{cliexample}{Command}
+				\begin{verbatim}
+					Luton # ping 192.168.1.50
+				\end{verbatim}
+			\end{cliexample}
+		\end{latin}
 
 	پاسخ موفق \lr{ping} نشان می‌دهد که مسیر شبکه تا رایانه برقرار است؛
 	اما به‌تنهایی صحت نام فایل یا دسترسی TFTP را تضمین نمی‌کند. در صورت
@@ -3738,15 +3996,19 @@
 	زیر را در U-Boot اجرا کنید:
 
 	\begin{LTR}
-		\begin{verbatim}
-			Luton# run get_os
-		\end{verbatim}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+				Luton# run get_os
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 		دستور \lr{run get\_os} تصویر را از TFTP دریافت می‌کند و
 	\begin{LTR}
-		\begin{verbatim}
-			Luton# run update_os
-		\end{verbatim}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+				Luton# run update_os
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 
@@ -3759,19 +4021,23 @@
 	پس از پایان موفق عملیات، سوییچ را راه‌اندازی مجدد کنید:
 
 	\begin{LTR}
-		\begin{verbatim}
-			Luton# reset
-		\end{verbatim}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+					Luton# reset
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	پس از بوت، نسخه و سلامت سیستم را با دستورهای زیر بررسی کنید:
 
 	\begin{LTR}
-		\begin{verbatim}
-			DT7429# show version
-			DT7429# show running-config
-			DT7429# show interface status
-		\end{verbatim}
+		\begin{cliexample}{Command}
+			\begin{verbatim}
+					DT7429# show version
+					DT7429# show running-config
+					DT7429# show interface status
+			\end{verbatim}
+		\end{cliexample}
 	\end{LTR}
 
 	در صورت ازبین‌رفتن تنظیمات، نسخه پشتیبان ذخیره‌شده را با دقت و
