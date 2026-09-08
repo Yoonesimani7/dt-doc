@@ -3645,11 +3645,10 @@
 	\appendix
 	\chapter{به‌روزرسانی نرم‌افزار از طریق U-Boot و TFTP}
 
-	این پیوست بر اساس فایل \lr{update\_software.odt} تهیه شده است و
-	مراحل به‌روزرسانی Firmware سوییچ را از طریق کنسول، شبکه مستقیم و
-	سرور \lr{TFTP} توضیح می‌دهد. نام تصویر استفاده‌شده در سند منبع
-	\lr{mipsel\_vsc7429.mfi} است؛ پیش از اجرا، سازگاری آن با مدل و
-	نسخه سخت‌افزار را از منبع رسمی تأیید کنید.
+	در این پیوست، نحوهٔ به‌روزرسانی سیستم‌عامل (\lr{Firmware}) سوییچ شرح داده شده است. در حال حاضر، این فرایند از طریق منوی \lr{Boot}، اتصال مستقیم شبکه و سرور \lr{TFTP} انجام می‌پذیرد؛ شایان ذکر است در نسخه‌های آینده، امکان به‌روزرسانی از طریق محیط خط فرمان (\lr{CLI}) نیز فراهم خواهد شد.
+
+	نام ایمیج (\lr{Image}) استفاده‌شده در این سند، \lr{mipsel\_vsc7429.mfi} است. پیش از اقدام به اجرا، حتماً سازگاری آن با مدل و نسخهٔ سخت‌افزار دستگاه را از طریق منبع رسمی بررسی و تأیید نمایید.
+
 
 	\begin{cautionbox}{هشدارهای ضروری پیش از شروع}
 		\begin{itemize}
@@ -3708,13 +3707,24 @@
 
 	\section{آزمون ارتباط از محیط U-Boot}
 
-	در زمان راه‌اندازی، با کلیدهای کنسول وارد محیط \lr{U-Boot} شوید.
-	سپس ارتباط با رایانه دارای TFTP را آزمایش کنید:
+برای ورود به بخش \lr{Boot} و آماده‌سازی سوییچ جهت به‌روزرسانی، مراحل زیر را دنبال کنید:
+
+	\begin{enumerate}
+		\item ابتدا سوییچ را ریست (\lr{Reboot}) نمایید.
+		\item در محیط کنسول، با مشاهده شمارندهٔ معکوس زمان (همان‌طور که در تصویر مشخص شده است)، کلید \lr{Enter} را فشار دهید تا فرایند بوت متوقف شده و وارد تنظیمات \lr{Bootloader} شوید.
+		\begin{flushleft}
+			\includegraphics[width=10cm]{Luton.png}
+		\end{flushleft}
+
+		\item در این حالت، خط فرمان (پرامپت) به صورت \lr{\texttt{Luton\#}} تغییر می‌یابد.
+		\item سپس با استفاده از دستور \lr{\texttt{ping}}، برقراری ارتباط شبکه را بررسی نمایید.
+	\end{enumerate}
+
 
 	\begin{LTR}
-		\begin{lstlisting}
-			ping 192.168.1.50
-		\end{lstlisting}
+		\begin{verbatim}
+			Luton # ping 192.168.1.50
+		\end{verbatim}
 	\end{LTR}
 
 	پاسخ موفق \lr{ping} نشان می‌دهد که مسیر شبکه تا رایانه برقرار است؛
@@ -3728,13 +3738,18 @@
 	زیر را در U-Boot اجرا کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
-			run get_os
-			run update_os
-		\end{lstlisting}
+		\begin{verbatim}
+			Luton# run get_os
+		\end{verbatim}
+	\end{LTR}
+		دستور \lr{run get\_os} تصویر را از TFTP دریافت می‌کند و
+	\begin{LTR}
+		\begin{verbatim}
+			Luton# run update_os
+		\end{verbatim}
 	\end{LTR}
 
-	دستور \lr{run get\_os} تصویر را از TFTP دریافت می‌کند و
+
 	\lr{run update\_os} آن را در حافظه Flash می‌نویسد. پیام‌های کنسول
 	را تا پایان عملیات ثبت کنید و تا اتمام نوشتن Flash هیچ کلیدی برای
 	راه‌اندازی مجدد یا قطع عملیات نزنید.
@@ -3744,19 +3759,19 @@
 	پس از پایان موفق عملیات، سوییچ را راه‌اندازی مجدد کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
-			reset
-		\end{lstlisting}
+		\begin{verbatim}
+			Luton# reset
+		\end{verbatim}
 	\end{LTR}
 
 	پس از بوت، نسخه و سلامت سیستم را با دستورهای زیر بررسی کنید:
 
 	\begin{LTR}
-		\begin{lstlisting}
-			show version
-			show running-config
-			show interface status
-		\end{lstlisting}
+		\begin{verbatim}
+			DT7429# show version
+			DT7429# show running-config
+			DT7429# show interface status
+		\end{verbatim}
 	\end{LTR}
 
 	در صورت ازبین‌رفتن تنظیمات، نسخه پشتیبان ذخیره‌شده را با دقت و
